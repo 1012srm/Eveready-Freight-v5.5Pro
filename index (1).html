@@ -1,0 +1,2086 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>EVEREADY FREIGHT 5.5 PRO - 12 Theme Colors & Master Admin - Created By SALIK RAM MAURYA</title>
+<meta name="theme-color" content="#E30613">
+<style>
+:root {
+  --primary: #E30613;
+  --primary-dark: #b8050f;
+  --dark: #0f172a;
+  --bg: #f8fafc;
+  --border: #cbd5e1;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --success: #15803d;
+  --warning: #b45309;
+}
+* { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+body { margin: 0; background: var(--bg); color: var(--text-main); font-size: 12px; }
+
+/* Header Bar */
+.hdr { background: #0A0A0A; color: #fff; padding: 10px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 4px solid var(--primary); flex-wrap: wrap; gap: 8px; }
+.brand { display: flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 800; }
+.brand span { color: var(--primary); }
+.badge-unfrozen { background: #15803d; color: #fff; padding: 3px 8px; border-radius: 6px; font-size: 10px; font-weight: 800; letter-spacing: 0.5px; }
+
+/* Buttons & Inputs */
+.btn { background: var(--primary); color: #fff; border: none; padding: 7px 12px; border-radius: 6px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; font-size: 11.5px; }
+.btn:hover { background: var(--primary-dark); }
+.btn-b { background: #0f172a; color: #fff; border: none; padding: 7px 12px; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 11.5px; }
+.btn-b:hover { background: #1e293b; }
+.btn-o { background: #fff; border: 1.5px solid var(--primary); color: var(--primary); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 11.5px; }
+.btn-o:hover { background: #fff5f5; }
+.inp { padding: 6px 10px; border: 1.5px solid var(--border); border-radius: 6px; font-size: 11.5px; outline: none; background: #fff; }
+.inp:focus { border-color: var(--primary); }
+
+/* Navigation Tabs */
+.tab-bar { display: flex; background: #fff; border-bottom: 2px solid var(--border); padding: 0 12px; gap: 4px; overflow-x: auto; }
+.tab-btn { padding: 10px 16px; border: none; background: transparent; font-weight: 700; color: var(--text-muted); cursor: pointer; border-bottom: 3px solid transparent; font-size: 12.5px; white-space: nowrap; }
+.tab-btn:hover { color: var(--text-main); }
+.tab-btn.active { color: var(--primary); border-bottom-color: var(--primary); background: #fff5f5; }
+
+/* Panels */
+.view-panel { display: none; padding: 12px; }
+.view-panel.active { display: block; }
+
+/* KPI Cards */
+.kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; margin-bottom: 12px; }
+.kpi-card { background: #fff; border-radius: 8px; padding: 12px; border: 1px solid var(--border); border-top: 3.5px solid var(--primary); box-shadow: 0 1px 3px rgba(0,0,0,0.03); }
+.kpi-title { font-size: 10.5px; text-transform: uppercase; font-weight: 700; color: var(--text-muted); }
+.kpi-val { font-size: 18px; font-weight: 900; color: var(--dark); margin: 3px 0; }
+.kpi-sub { font-size: 10px; color: var(--text-muted); }
+
+/* Containers */
+.card { background: #fff; border-radius: 8px; padding: 12px; border: 1px solid var(--border); margin-bottom: 12px; }
+.card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid #f1f5f9; }
+.card-title { font-size: 12px; font-weight: 800; color: var(--dark); }
+
+/* Toolbar */
+.toolbar { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; margin-bottom: 10px; background: #fff; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border); }
+.filter-sel { padding: 6px 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 11.5px; background: #f8fafc; font-weight: 600; outline: none; }
+
+/* UNFREEZED TABLE SYSTEM */
+.table-wrap { overflow: auto; max-height: 70vh; border: 1.5px solid #cbd5e1; border-radius: 8px; background: #fff; position: relative; }
+table { width: 100%; border-collapse: collapse; font-size: 11px; min-width: 1750px; }
+th { padding: 8px 6px; text-align: center; white-space: nowrap; position: sticky; top: 0; z-index: 10; font-size: 10.5px; font-weight: 800; border-right: 1px solid rgba(255,255,255,0.2); }
+th.gr { background: #1e40af; color: #fff; }
+th.mat { background: #6d28d9; color: #fff; }
+th.green { background: #15803d; color: #fff; }
+th.black { background: #0f172a; color: #fff; }
+
+td { padding: 5px 4px; border-bottom: 1px solid #e2e8f0; border-right: 1px solid #e2e8f0; text-align: center; white-space: nowrap; }
+tr:hover td { background-color: #f8fafc; }
+
+/* Permanent Unfrozen Direct Inline Editing */
+td.edit-cell { cursor: text; background: #ffffff; transition: background .15s, outline .15s; outline: none; }
+td.edit-cell:hover { background: #fefce8 !important; box-shadow: inset 0 0 0 1px var(--primary); }
+td.edit-cell:focus { background: #fffef0 !important; box-shadow: inset 0 0 0 2px var(--primary); font-weight: 700; color: #000; }
+
+td.gr-cell { background: #eff6ff; }
+td.mat-cell { background: #f5f3ff; }
+td.green-cell { background: #f0fdf4; }
+
+.chip { padding: 2px 6px; border-radius: 4px; background: var(--primary); color: #fff; cursor: pointer; font-weight: 700; font-size: 10px; display: inline-block; }
+.badge { padding: 2px 6px; border-radius: 8px; font-size: 9.5px; font-weight: 800; display: inline-block; }
+.badge-appr { background: #dcfce7; color: #15803d; }
+.badge-pend { background: #fef3c7; color: #b45309; }
+.badge-rej { background: #fee2e2; color: #b91c1c; }
+.badge-rcm { background: #fff7ed; color: #c2410c; border: 1px dashed #fb923c; }
+.badge-reg { background: #eff6ff; color: #1d4ed8; }
+
+.bar-track { background: #f1f5f9; height: 14px; border-radius: 7px; overflow: hidden; width: 100%; display: flex; margin: 3px 0; }
+.bar-fill { height: 100%; border-radius: 7px; }
+
+/* Modals */
+.modal { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: none; align-items: center; justify-content: center; z-index: 100; backdrop-filter: blur(1.5px); }
+.modal.on { display: flex; }
+.box { background: #fff; border-radius: 10px; width: 95%; max-width: 840px; max-height: 90vh; overflow: auto; box-shadow: 0 15px 30px rgba(0,0,0,0.25); border: 1px solid var(--border); }
+.box-h { background: #0f172a; color: #fff; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--primary); position: sticky; top: 0; z-index: 5; }
+.rate-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(65px, 1fr)); gap: 6px; }
+.rate-btn { padding: 8px; border: 1px solid var(--border); border-radius: 6px; background: #fff; cursor: pointer; font-weight: 800; font-size: 11.5px; }
+.rate-btn.sel { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+/* Report Layout */
+.report-grid { display: grid; grid-template-columns: 280px 1fr; gap: 12px; }
+.report-controls { background: #fff; padding: 12px; border-radius: 8px; border: 1px solid var(--border); }
+.report-output { background: #fff; padding: 12px; border-radius: 8px; border: 1px solid var(--border); min-height: 420px; }
+
+@media(max-width: 768px) {
+  .report-grid { grid-template-columns: 1fr; }
+  .box div[style*="grid-template-columns: 1fr 1fr"] { grid-template-columns: 1fr !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- ONLINE USER AUTHENTICATION SCREEN -->
+<div id="authOverlay" class="auth-wrap" style="position:fixed;inset:0;z-index:9999;background:radial-gradient(circle at top right,#3b0709,#09090b);display:flex;align-items:center;justify-content:center;padding:16px;overflow-y:auto">
+  <div class="auth-card" style="background:#fff;border-radius:18px;width:100%;max-width:460px;overflow:hidden;box-shadow:0 30px 70px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.15);margin:auto">
+    <div style="background:#0A0A0A;color:#fff;padding:20px;text-align:center;border-bottom:4px solid var(--primary)">
+      <div style="display:inline-flex;align-items:center;gap:6px;font-size:20px;font-weight:900">
+        <span>⚡ <span style="color:var(--primary)">EVEREADY</span> FREIGHT 5.5</span>
+      </div>
+      <div style="font-size:11.5px;color:#facc15;font-weight:700;margin-top:4px">
+        Created By: SALIK RAM MAURYA
+      </div>
+      <div style="font-size:10.5px;color:#94a3b8;margin-top:2px">Online Logistics Portal • Master Admin Control • Ticket-Based Password Reset</div>
+    </div>
+    
+    <div style="padding:22px">
+      <!-- 1. SIGN IN VIEW -->
+      <div id="loginView">
+        <h3 style="margin:0 0 12px;font-size:15px;color:var(--dark)">Online Portal Sign In</h3>
+        <label style="font-size:11px;font-weight:700;color:#475569">Username / 10-Digit Mobile / Email</label>
+        <input id="uLoginId" class="inp" placeholder="e.g. admin or 9876543210" value="admin">
+        <label style="font-size:11px;font-weight:700;color:#475569;margin-top:6px;display:block">Password</label>
+        <input id="uLoginPass" type="password" class="inp" placeholder="Enter password" value="admin123">
+        
+        <div style="display:flex;justify-content:space-between;align-items:center;margin:8px 0 12px;font-size:11px">
+          <label style="display:flex;align-items:center;gap:4px;cursor:pointer"><input type="checkbox" id="remUser" checked> Remember Session</label>
+          <a href="javascript:void(0)" onclick="switchAuthView('ticket')" style="color:var(--primary);text-decoration:none;font-weight:700">Forgot / Blocked?</a>
+        </div>
+
+        <button class="btn" style="width:100%;padding:10px;font-size:12.5px;justify-content:center" onclick="performOnlineLogin()">Sign In to Dashboard</button>
+        
+        <div style="display:flex;align-items:center;gap:8px;margin:12px 0;color:#94a3b8;font-size:10.5px"><div style="flex:1;height:1px;background:#e2e8f0"></div>OR 1-CLICK DEMO LOGIN<div style="flex:1;height:1px;background:#e2e8f0"></div></div>
+        
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px">
+          <button type="button" class="btn-b" style="padding:6px;font-size:10px;justify-content:center" onclick="quickFillDemo('admin')">👑 Master Admin</button>
+          <button type="button" class="btn-o" style="padding:6px;font-size:10px;justify-content:center" onclick="quickFillDemo('logistics')">🚚 Logistics</button>
+          <button type="button" class="btn-b" style="padding:6px;font-size:10px;justify-content:center;background:#15803d" onclick="quickFillDemo('approver')">💰 Finance</button>
+        </div>
+        
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:14px;padding-top:12px;border-top:1px solid #f1f5f9;font-size:11px">
+          <a href="javascript:void(0)" onclick="switchAuthView('register')" style="color:var(--primary);font-weight:700;text-decoration:none">+ Create New Account</a>
+          <a href="javascript:void(0)" onclick="switchAuthView('ticket')" style="color:#64748b;font-weight:600;text-decoration:none">🎫 Raise Reset Ticket</a>
+        </div>
+      </div>
+
+      <!-- 2. REGISTER VIEW -->
+      <div id="registerView" style="display:none">
+        <h3 style="margin:0 0 10px;font-size:15px;color:var(--dark)">New User Registration</h3>
+        <div style="font-size:11px;color:#64748b;margin-bottom:10px">Create your logistics staff account. Master Admin will oversee password resets.</div>
+        
+        <label style="font-size:10.5px;font-weight:700">Full Name</label>
+        <input id="regName" class="inp" placeholder="e.g. Rajesh Sharma">
+        
+        <label style="font-size:10.5px;font-weight:700">Mobile No (10 Digits)</label>
+        <input id="regMobile" type="tel" maxlength="10" class="inp" placeholder="e.g. 9876543210">
+        
+        <label style="font-size:10.5px;font-weight:700">Username / Staff ID</label>
+        <input id="regUsername" class="inp" placeholder="e.g. rajesh.logistics">
+
+        <label style="font-size:10.5px;font-weight:700">Assigned Department / Role</label>
+        <select id="regRole" class="filter-sel" style="width:100%;margin:3px 0 6px">
+          <option value="Logistics Officer" selected>Logistics Plant Officer</option>
+          <option value="Accounts Approver">Accounts / Finance Approver</option>
+          <option value="Transporter Auditor">Transporter / Audit Viewer</option>
+          <option value="Admin">Administrator (Subject to Approval)</option>
+        </select>
+
+        <label style="font-size:10.5px;font-weight:700">Create Password (min 6 characters)</label>
+        <input id="regPass" type="password" class="inp" placeholder="Enter secure password">
+
+        <button class="btn" style="width:100%;padding:10px;margin-top:8px;justify-content:center" onclick="performOnlineRegister()">Submit Registration</button>
+        <div style="text-align:center;margin-top:12px;font-size:11px">
+          <a href="javascript:void(0)" onclick="switchAuthView('login')" style="color:var(--primary);font-weight:700;text-decoration:none">← Already have an account? Sign In</a>
+        </div>
+      </div>
+
+      <!-- 3. FORGOT / BLOCKED PASSWORD: RAISE TICKET VIEW -->
+      <div id="ticketView" style="display:none">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px">
+          <span style="font-size:20px">🎫</span>
+          <div>
+            <h3 style="margin:0;font-size:14.5px;color:var(--dark)">Raise Password Reset Ticket</h3>
+            <div style="font-size:10.5px;color:#64748b">Master Admin holds all rights to reset or unblock accounts</div>
+          </div>
+        </div>
+
+        <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:6px;padding:8px 10px;font-size:10.5px;color:#1e40af;margin-bottom:10px;line-height:1.4">
+          🔒 <b>Admin Security Policy:</b> For audit and security compliance, user passwords cannot be auto-reset. Please raise this ticket. Master Admin will verify and reset your credentials.
+        </div>
+
+        <label style="font-size:10.5px;font-weight:700">Registered Mobile No or Username</label>
+        <input id="tktUserIdent" class="inp" placeholder="Enter your 10-digit mobile or username">
+
+        <label style="font-size:10.5px;font-weight:700">Issue Category</label>
+        <select id="tktReason" class="filter-sel" style="width:100%;margin:3px 0 6px">
+          <option value="Forgot Password">Forgot Password</option>
+          <option value="Account Blocked">Account Blocked / Too Many Attempts</option>
+          <option value="Department Role Upgrade">Need Role / Department Change</option>
+          <option value="New Credential Request">New Credential Request</option>
+        </select>
+
+        <label style="font-size:10.5px;font-weight:700">Remarks / Alternate Contact Phone</label>
+        <textarea id="tktRemarks" class="inp" style="height:60px;resize:none" placeholder="Provide details, employee ID, or alternate phone number..."></textarea>
+
+        <button class="btn" style="width:100%;padding:10px;margin-top:6px;justify-content:center" onclick="submitPasswordTicket()">Raise Ticket to Master Admin</button>
+
+        <div style="text-align:center;margin-top:12px;font-size:11px">
+          <a href="javascript:void(0)" onclick="switchAuthView('login')" style="color:var(--primary);font-weight:700;text-decoration:none">← Return to Sign In</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- HEADER -->
+<div class="hdr">
+  <div class="brand">
+    <div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <span>⚡ EVEREADY</span> FREIGHT 5.5 PRO
+        <span class="badge-unfrozen">✓ UNFREEZED & DIRECT EDIT READY</span>
+      </div>
+      <div style="font-size:10px;color:#cbd5e1;margin-top:2px;font-weight:600">
+        👨‍💼 Developed & Created By: <b style="color:#facc15;letter-spacing:0.5px">SALIK RAM MAURYA</b>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+    <div style="display:flex;align-items:center;gap:4px;background:#1e293b;padding:3px 8px;border-radius:10px;border:1px solid #334155">
+      <label style="display:flex;align-items:center;gap:3px;cursor:pointer;font-size:10px;color:#f8fafc">
+        <input type="checkbox" id="autoSaveToggle" checked onchange="toggleAutoSave()"> 💾 Auto
+      </label>
+      <select id="autoSaveInterval" style="padding:1px 3px;border-radius:3px;border:none;font-size:9.5px;background:#0f172a;color:#fff" onchange="updateAutoSaveInterval()">
+        <option value="5000">5s</option>
+        <option value="10000" selected>10s</option>
+        <option value="30000">30s</option>
+      </select>
+      <span id="lastSaved" style="font-size:9.5px;color:#4ade80;font-weight:700">✓ Ready</span>
+    </div>
+    <!-- 12 Theme Colors Selector -->
+    <div style="display:flex;align-items:center;gap:4px;background:#1e293b;padding:3px 8px;border-radius:10px;border:1px solid #334155">
+      <span style="font-size:11px" title="Change App Theme">🎨</span>
+      <select id="themeSelect" class="filter-sel" style="padding:2px 6px;border-radius:4px;font-size:10px;background:#0f172a;color:#fff;border:none;font-weight:700" onchange="applySelectedTheme(this.value)">
+        <option value="red" selected>1. Eveready Red (#E30613)</option>
+        <option value="blue">2. Electric Blue (#2563eb)</option>
+        <option value="emerald">3. Emerald Green (#059669)</option>
+        <option value="purple">4. Royal Purple (#7c3aed)</option>
+        <option value="orange">5. Amber Orange (#ea580c)</option>
+        <option value="cyan">6. Cyberpunk Cyan (#06b6d4)</option>
+        <option value="rose">7. Deep Rose (#e11d48)</option>
+        <option value="golden">8. Goldenrod (#d97706)</option>
+        <option value="teal">9. Midnight Teal (#0d9488)</option>
+        <option value="indigo">10. Indigo Slate (#4f46e5)</option>
+        <option value="forest">11. Forest Pine (#16a34a)</option>
+        <option value="carbon">12. Carbon Onyx (#374151)</option>
+      </select>
+      <button type="button" onclick="openThemeModal()" style="background:transparent;border:none;cursor:pointer;padding:0 2px" title="Open 12 Color Palette Swatches">🖌️</button>
+    </div>
+    <button class="btn" onclick="openBill()">+ Add New Bill</button>
+    <button class="btn-o" onclick="openImportModal()">📂 Import CSV</button>
+    <button class="btn-b" onclick="exportCSV()">📥 Export Excel CSV</button>
+    <button class="btn-b" onclick="resetSampleData()">↺ Reset Demo Data</button>
+    <button style="background:#dc2626;color:#fff;border:none;padding:7px 12px;border-radius:6px;font-weight:700;cursor:pointer;font-size:11.5px;display:inline-flex;align-items:center;gap:4px" onclick="logoutOnlineUser()">🚪 Logout</button>
+  </div>
+</div>
+
+<!-- NAVIGATION TABS -->
+<div class="tab-bar">
+  <button class="tab-btn" id="btn-tab-dashboard" onclick="switchTab('dashboard')">Section A: 📊 Executive Dashboard</button>
+  <button class="tab-btn active" id="btn-tab-bills" onclick="switchTab('bills')">Section B: 📑 Operations & Unfreezed Ledger (Direct Edit)</button>
+  <button class="tab-btn" id="btn-tab-reports" onclick="switchTab('reports')">Section C: 📈 Dynamic Reports & Reconciliation</button>
+</div>
+
+<!-- SECTION A: DASHBOARD -->
+<div id="tab-dashboard" class="view-panel">
+  <div class="kpi-grid">
+    <div class="kpi-card" style="border-top-color:#E30613">
+      <div class="kpi-title">Gross Freight <span>🚚</span></div>
+      <div class="kpi-val" id="kpiGross">₹0</div>
+      <div class="kpi-sub">Total consignment value</div>
+    </div>
+    <div class="kpi-card" style="border-top-color:#10b981">
+      <div class="kpi-title">Net Payable <span>💵</span></div>
+      <div class="kpi-val" id="kpiNet" style="color:#059669">₹0</div>
+      <div class="kpi-sub" id="kpiPendingPay">Pending: ₹0</div>
+    </div>
+    <div class="kpi-card" style="border-top-color:#8b5cf6">
+      <div class="kpi-title">Delay Penalty Deducted <span>⏱</span></div>
+      <div class="kpi-val" id="kpiPenalty" style="color:#7c3aed">₹0</div>
+      <div class="kpi-sub" id="kpiDelayAvg">Avg Delay: 0 Days</div>
+    </div>
+    <div class="kpi-card" style="border-top-color:#2563eb">
+      <div class="kpi-title">TDS Withheld <span>🏛</span></div>
+      <div class="kpi-val" id="kpiTds" style="color:#2563eb">₹0</div>
+      <div class="kpi-sub">Statutory IT deductions</div>
+    </div>
+    <div class="kpi-card" style="border-top-color:#f59e0b">
+      <div class="kpi-title">Payable Surcharges <span>⛽</span></div>
+      <div class="kpi-val" id="kpiAddons" style="color:#d97706">₹0</div>
+      <div class="kpi-sub">Diesel + Detention + TwoPoint</div>
+    </div>
+    <div class="kpi-card" style="border-top-color:#0f172a">
+      <div class="kpi-title">Cargo Weight & Trips <span>⚖</span></div>
+      <div class="kpi-val" id="kpiWeight">0 MT</div>
+      <div class="kpi-sub" id="kpiBillsCount">0 Consignments</div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px;margin-bottom:12px">
+    <div class="card">
+      <div class="card-header"><b class="card-title">Freight Volume by Lane / Route Corridor</b><span style="font-size:10px;color:var(--text-muted)">₹ Lakhs</span></div>
+      <div id="visRoutes"></div>
+    </div>
+    <div class="card">
+      <div class="card-header"><b class="card-title">Carrier Billing vs Delay Penalties</b><span style="font-size:10px;color:var(--text-muted)">Transporter Audit</span></div>
+      <div id="visVendors"></div>
+    </div>
+    <div class="card">
+      <div class="card-header"><b class="card-title">Consignment Workflow Status</b><span style="font-size:10px;color:var(--text-muted)">Distribution</span></div>
+      <div id="visStatus"></div>
+    </div>
+    <div class="card">
+      <div class="card-header"><b class="card-title">Net Financial Composition</b><span style="font-size:10px;color:var(--text-muted)">Breakdown</span></div>
+      <div id="visBreakup"></div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px">
+    <div class="card"><div class="card-header"><b style="font-size:11.5px">Top Net Payables</b></div><div id="c4"></div></div>
+    <div class="card"><div class="card-header"><b style="font-size:11.5px">Delay Penalties by Origin</b></div><div id="c3"></div></div>
+    <div class="card"><div class="card-header"><b style="font-size:11.5px">Origin Freight Ratio</b></div><div id="c1"></div></div>
+  </div>
+</div>
+
+<!-- SECTION B: UNFREEZED BILL OPERATIONS & DIRECT INLINE EDITING -->
+<div id="tab-bills" class="view-panel active">
+  <div style="background:#eff6ff;border:1.5px solid #93c5fd;padding:8px 12px;border-radius:6px;font-size:11.5px;color:#1e40af;margin-bottom:10px">
+    🔓 <b>All Sections Unfreezed:</b> Every table cell with white or colored background is <b>directly editable</b>. Click any cell, type your change, and click away to automatically calculate and save. <b>Actual Days</b> = <code>Material Date - GR Date</code>. <b>Delay Penalty</b> = <code>IF(Delay &lt; 4, Delay*1000, (Delay-3)*1500+3000)</code>.
+  </div>
+
+  <div class="toolbar">
+    <input id="srch" style="flex:1;min-width:180px" class="inp" placeholder="Search Bill No, GR No, Transporter, Origin, SAP Doc..." oninput="render()">
+    <select id="sort" class="filter-sel" onchange="render()">
+      <option value="">Sort: Default</option>
+      <option value="highF">Highest Freight</option>
+      <option value="highPen">Highest Delay Penalty</option>
+      <option value="highNet">Highest Net Payable</option>
+      <option value="recent">Latest Date</option>
+    </select>
+    <select id="statF" class="filter-sel" onchange="render()">
+      <option value="">Status: All</option>
+      <option>Pending</option>
+      <option>Approved</option>
+      <option>Rejected</option>
+    </select>
+    <select id="venF" class="filter-sel" onchange="render()">
+      <option value="">Vendor: All</option>
+    </select>
+    <button class="btn" onclick="openBill()">+ Add Bill</button>
+    <button class="btn-o" onclick="exportCSV()">📥 Download Excel CSV</button>
+  </div>
+
+  <div class="table-wrap">
+    <table id="mainTbl">
+      <thead>
+        <tr>
+          <th class="black">#</th>
+          <th class="black">Bill No ✎</th>
+          <th class="black">Bill Date ✎</th>
+          <th class="black" style="background:#047857;color:#fff">Plant Location ✎</th>
+          <th class="black">Vendor ✎</th>
+          <th class="black">From ✎</th>
+          <th class="black">To ✎</th>
+          <th class="gr">Truck No ✎</th>
+          <th class="gr">GR.No ✎</th>
+          <th class="gr">G.R.Date (YYYY-MM-DD) ✎</th>
+          <th class="gr">Weight (MT) ✎</th>
+          <th class="gr">Freight Rate ₹ ✎</th>
+          <th class="gr">SAP Doc No ✎</th>
+          <th class="black">Bill Amt ₹ ✎</th>
+          <th class="black">TDS % ▼</th>
+          <th class="black">TDS Amt</th>
+          <th class="black" style="background:#1e3a8a;color:#fff">GST Category ▼</th>
+          <th class="black">GST Type ▼</th>
+          <th class="black">GST% ✎</th>
+          <th class="black">GST Amt</th>
+          <th class="black">RCM?</th>
+          <th class="mat">Material Recd Date ✎</th>
+          <th class="mat">Actual Days (Auto)</th>
+          <th class="mat">Lead Time ✎</th>
+          <th class="mat">Delay Days (Auto)</th>
+          <th class="mat">Delay Penalty ₹ (Auto)</th>
+          <th class="green">Diesel Incr ₹ ✎</th>
+          <th class="green">Detention/Extra ₹ ✎</th>
+          <th class="green">Two Point ₹ ✎</th>
+          <th class="black">Net Payable ₹</th>
+          <th class="black">Status ▼</th>
+          <th class="black">Actions</th>
+        </tr>
+      </thead>
+      <tbody id="tb"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- SECTION C: DYNAMIC REPORTS -->
+<div id="tab-reports" class="view-panel">
+  <div class="report-grid">
+    <div class="report-controls">
+      <h4 style="margin:0 0 10px;font-size:13px;color:var(--dark);border-bottom:2px solid var(--primary);padding-bottom:5px">
+        ⚙ Dynamic Report Engine
+      </h4>
+
+      <div style="margin-bottom:8px">
+        <label style="font-size:11px;font-weight:700">Preset Template</label>
+        <select id="repTemplate" class="filter-sel" style="width:100%;margin-top:3px" onchange="applyReportTemplate()">
+          <option value="vendor_summary">Vendor Payment & Performance Summary</option>
+          <option value="transit_delay">Transit Delay & Penalty Audit</option>
+          <option value="sap_recon">SAP vs GR Documentation Ledger</option>
+          <option value="lane_cost">Lane / Route Cost per MT Matrix</option>
+          <option value="tax_audit">GST (Forward/RCM) & TDS Schedule</option>
+        </select>
+      </div>
+
+      <div style="margin-bottom:8px">
+        <label style="font-size:11px;font-weight:700">Group Dimension</label>
+        <select id="repGroupBy" class="filter-sel" style="width:100%;margin-top:3px" onchange="generateDynamicReport()">
+          <option value="plantLocation">Plant Location (e.g. Jammu, Kolkata)</option>
+          <option value="vendor">Vendor Name</option>
+          <option value="truckNo">Truck / Vehicle No</option>
+          <option value="route">Route (From - To)</option>
+          <option value="fromLoc">Origin City</option>
+          <option value="toLoc">Destination City</option>
+          <option value="status">Approval Status</option>
+          <option value="gstCategory">GST Tax Category (IGST vs CGST+SGST)</option>
+          <option value="gstType">GST Filing Category (Reg vs RCM)</option>
+        </select>
+      </div>
+
+      <div style="margin-bottom:8px">
+        <label style="font-size:11px;font-weight:700">Status Filter</label>
+        <select id="repStatus" class="filter-sel" style="width:100%;margin-top:3px" onchange="generateDynamicReport()">
+          <option value="ALL">All Statuses</option>
+          <option value="Approved">Approved Only</option>
+          <option value="Pending">Pending Only</option>
+          <option value="Rejected">Rejected Only</option>
+        </select>
+      </div>
+
+      <div style="margin-bottom:8px">
+        <label style="font-size:11px;font-weight:700">Date Range (Bill Date)</label>
+        <input type="date" id="repFromDate" class="inp" style="padding:5px;font-size:11px;margin:2px 0" onchange="generateDynamicReport()">
+        <input type="date" id="repToDate" class="inp" style="padding:5px;font-size:11px;margin:2px 0" onchange="generateDynamicReport()">
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:5px;margin-top:12px">
+        <button class="btn" onclick="generateDynamicReport()">🔄 Re-Run Report</button>
+        <button class="btn-o" onclick="exportReportCSV()">📥 Export Summary CSV</button>
+        <button class="btn-b" onclick="window.print()">🖨 Print / PDF View</button>
+      </div>
+    </div>
+
+    <div class="report-output">
+      <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #0f172a;padding-bottom:8px;margin-bottom:10px">
+        <div>
+          <h3 id="repTitle" style="margin:0;font-size:14px;color:#0f172a">Vendor Performance & Liability Report</h3>
+          <div style="font-size:10.5px;color:#64748b;margin-top:2px">Dynamic summary calculated from active consignment table</div>
+        </div>
+        <span class="badge badge-appr" id="repRowsBadge">0 Groups</span>
+      </div>
+
+      <div class="table-wrap" style="max-height:50vh" id="reportContentArea"></div>
+      <div id="reportSummaryFoot" style="margin-top:12px;padding:10px;background:#f8fafc;border-radius:6px;border:1px solid #e2e8f0;display:flex;gap:12px;flex-wrap:wrap"></div>
+    </div>
+  </div>
+</div>
+
+<!-- BILL ENTRY MODAL -->
+<div class="modal" id="bModal">
+  <div class="box">
+    <div class="box-h">
+      <b id="bTitle" style="font-size:13px">Consignment Bill Entry</b>
+      <button class="btn" style="width:auto;padding:2px 6px;margin:0" onclick="closeBill()">✕</button>
+    </div>
+    <div style="padding:12px;display:grid;grid-template-columns:1fr 1fr;gap:8px">
+      <div><label style="font-size:10.5px;font-weight:700">Bill No</label><input id="fNo" class="inp" placeholder="EB/26/001"></div>
+      <div><label style="font-size:10.5px;font-weight:700">Bill Date</label><input id="fDt" type="date" class="inp"></div>
+      <div>
+        <label style="font-size:10.5px;font-weight:700;color:#047857">Plant Location</label>
+        <input id="fPlantLoc" class="inp" placeholder="e.g. Jammu Plant, Kolkata Plant" style="border-color:#10b981;font-weight:700">
+      </div>
+      <div><label style="font-size:10.5px;font-weight:700">Vendor / Carrier</label><input id="fVen" class="inp" placeholder="Carrier Name"></div>
+      <div><label style="font-size:10.5px;font-weight:700">From (Origin)</label><input id="fFrom" class="inp" placeholder="Origin Hub"></div>
+      <div><label style="font-size:10.5px;font-weight:700">To (Destination)</label><input id="fTo" class="inp" placeholder="Destination Depot"></div>
+      <div><label style="font-size:10.5px;font-weight:700">Bill Amount ₹</label><input id="fAmt" type="number" class="inp" placeholder="0" oninput="recalc()"></div>
+
+      <div style="grid-column:1/-1;border:1.5px solid #1e40af;background:#eff6ff;border-radius:6px;padding:8px">
+        <b style="color:#1e40af;font-size:11px">● GR (Goods Receipt) & SAP Logistics Data</b>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:4px">
+          <div><label style="font-size:10px;font-weight:700">Truck No / Vehicle No</label><input id="fTruckNo" class="inp" placeholder="e.g. DL-01-AB-1234"></div>
+          <div><label style="font-size:10px;font-weight:700">GR.No</label><input id="fGRNo" class="inp"></div>
+          <div><label style="font-size:10px;font-weight:700">G.R.Date</label><input id="fGRDate" type="date" class="inp" oninput="recalc()"></div>
+          <div><label style="font-size:10px;font-weight:700">Weight (MT)</label><input id="fWeight" type="number" step="0.01" class="inp" oninput="recalc()"></div>
+          <div><label style="font-size:10px;font-weight:700">Freight Rate ₹/MT</label><input id="fFreightRate" type="number" class="inp" oninput="recalc()"></div>
+          <div><label style="font-size:10px;font-weight:700">SAP Doc / MIGO No</label><input id="fSAPDoc" class="inp"></div>
+        </div>
+      </div>
+
+      <div style="grid-column:1/-1;border:1.5px solid #fecaca;background:#fff5f5;border-radius:6px;padding:8px">
+        <b style="color:var(--primary);font-size:11px">● TDS Statutory Rate (%) Selection</b>
+        <div id="tdsGrid" class="rate-grid" style="margin-top:4px"></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px">
+          <div><label style="font-size:10px;font-weight:700">TDS Amount Auto (₹)</label><input id="fTdsA" readonly class="inp" style="background:#fef2f2;font-weight:700"></div>
+          <div><label style="font-size:10px;font-weight:700">IT Section</label><input id="fTdsS" class="inp" placeholder="Sec 194C"></div>
+        </div>
+      </div>
+
+      <div style="grid-column:1/-1;border:1.5px solid #bfdbfe;background:#f0f8ff;border-radius:6px;padding:8px">
+        <b style="color:#1e40af;font-size:11px">● GST Categorization (IGST / CGST+SGST) & Reverse Charge Mechanism</b>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:4px">
+          <div>
+            <label style="font-size:10px;font-weight:700">GST Category (Dropdown Selection)</label>
+            <select id="fGstCat" class="filter-sel" style="width:100%;margin-top:2px;font-weight:700;border-color:#93c5fd">
+              <option value="IGST">IGST (Inter-State Consignment)</option>
+              <option value="CGST+SGST">CGST + SGST (Intra-State Consignment)</option>
+              <option value="Exempt">Exempt / Zero Rated</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size:10px;font-weight:700">GST Filing Category</label>
+            <div style="display:flex;gap:4px;margin-top:2px;align-items:center">
+              <button type="button" class="btn-b" style="padding:5px 8px;font-size:10px" onclick="openGST()">Pick Rate</button>
+              <div id="gstShow" style="flex:1;border:1px dashed #93c5fd;border-radius:6px;padding:5px;background:#fff;font-size:10.5px;font-weight:600">Registered - 18%</div>
+            </div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px">
+          <div><label style="font-size:10px;font-weight:700">GST Rate (%)</label><input id="fGstRshow" readonly class="inp"></div>
+          <div><label style="font-size:10px;font-weight:700">GST Amount Auto (₹)</label><input id="fGstA" readonly class="inp" style="font-weight:700"></div>
+        </div>
+        <input type="hidden" id="fGstT">
+        <input type="hidden" id="fGstRate">
+        <input type="hidden" id="fRCM">
+      </div>
+
+      <div style="grid-column:1/-1;border:1.5px solid #a78bfa;background:#f5f3ff;border-radius:6px;padding:8px">
+        <b style="color:#6d28d9;font-size:11px">● Transit SLA & Penalty Engine (Auto Days & Formula)</b>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:4px">
+          <div><label style="font-size:10px;font-weight:700">Material Received Date</label><input id="fMatDt" type="date" class="inp" oninput="recalc()"></div>
+          <div><label style="font-size:10px;font-weight:700">Actual Transit Days Auto</label><input id="fActDays" readonly class="inp" style="background:#ede9fe;font-weight:800;color:#5b21b6"></div>
+          <div><label style="font-size:10px;font-weight:700">Agreed Lead Time (Days)</label><input id="fLead" type="number" class="inp" oninput="recalc()"></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:4px">
+          <div><label style="font-size:10px;font-weight:700">Delay Days Auto</label><input id="fDelayDays" readonly class="inp" style="background:#ede9fe;font-weight:800;color:#5b21b6"></div>
+          <div><label style="font-size:10px;font-weight:700">Delay Penalty Auto (₹)</label><input id="fDelayPen" readonly class="inp" style="background:#ede9fe;font-weight:800;color:#b91c1c"></div>
+        </div>
+      </div>
+
+      <div style="grid-column:1/-1;border:1.5px solid #86efac;background:#f0fdf4;border-radius:6px;padding:8px">
+        <b style="color:#14532d;font-size:11px">● Additional Payable Surcharges (Added to Net)</b>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:4px">
+          <div><label style="font-size:10px;font-weight:700">Diesel Escalation ₹</label><input id="fDiesel" type="number" class="inp" oninput="recalc()"></div>
+          <div><label style="font-size:10px;font-weight:700">Detention / Extra ₹</label><input id="fDetentionExtra" type="number" class="inp" oninput="recalc()"></div>
+          <div><label style="font-size:10px;font-weight:700">Two Point Delivery ₹</label><input id="fTwoPoint" type="number" class="inp" oninput="recalc()"></div>
+        </div>
+      </div>
+
+      <div>
+        <label style="font-size:10.5px;font-weight:700">Approval Status</label>
+        <select id="fStat" class="filter-sel" style="width:100%;margin-top:3px">
+          <option>Pending</option>
+          <option>Approved</option>
+          <option>Rejected</option>
+        </select>
+      </div>
+
+      <div style="grid-column:1/-1;background:#0f172a;color:#fff;padding:8px 12px;border-radius:6px;display:flex;justify-content:space-between;align-items:center">
+        <div style="font-size:10.5px;color:#94a3b8">Net = Bill - TDS - Delay + Diesel + Detention + TwoPoint + GST (0 if RCM)</div>
+        <div style="font-size:15px;font-weight:900">Net: <span id="fNet" style="color:#facc15">₹0</span></div>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:flex-end;gap:6px;padding:8px 12px 12px;border-top:1px solid #f1f5f9">
+      <button class="btn-o" style="padding:6px 12px" onclick="closeBill()">Cancel</button>
+      <button class="btn" style="padding:6px 16px" onclick="saveBill()">Save Consignment</button>
+    </div>
+  </div>
+</div>
+
+<!-- GST MODAL -->
+<div class="modal" id="gModal">
+  <div class="box" style="max-width:560px">
+    <div class="box-h">
+      <b>Select GST Rate & Category</b>
+      <button class="btn" style="width:auto;padding:2px 6px;margin:0" onclick="closeGST()">✕</button>
+    </div>
+    <div style="padding:12px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div style="border:1.5px solid #93c5fd;border-radius:6px;padding:10px;background:#f8fbff">
+        <h4 style="margin:0 0 6px;font-size:11px;color:#1e40af">FORWARD CHARGE (Registered)</h4>
+        <div id="gReg" class="rate-grid"></div>
+      </div>
+      <div style="border:1.5px solid #fdba74;background:#fffaf5;border-radius:6px;padding:10px">
+        <h4 style="margin:0 0 6px;font-size:11px;color:#c2410c">RCM (Reverse Charge)</h4>
+        <div id="gRcm" class="rate-grid"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TDS QUICK MODAL -->
+<div class="modal" id="sModal">
+  <div class="box" style="max-width:320px">
+    <div class="box-h">
+      <b>Select TDS Rate</b>
+      <button class="btn" style="width:auto;padding:2px 6px;margin:0" onclick="closeS()">✕</button>
+    </div>
+    <div style="padding:12px">
+      <div id="sGrid" class="rate-grid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- BATCH CSV IMPORT MODAL -->
+<div class="modal" id="importModal">
+  <div class="box" style="max-width:480px">
+    <div class="box-h">
+      <b>Batch CSV Consignment Import</b>
+      <button class="btn" style="width:auto;padding:2px 6px;margin:0" onclick="closeImportModal()">✕</button>
+    </div>
+    <div style="padding:14px">
+      <div style="border:2px dashed #93c5fd;background:#eff6ff;border-radius:6px;padding:20px;text-align:center;cursor:pointer" onclick="document.getElementById('csvFileInput').click()">
+        <span style="font-size:24px">📄</span>
+        <div style="font-size:12px;font-weight:700;margin-top:5px">Click to Upload CSV</div>
+        <div style="font-size:10px;color:#64748b;margin-top:2px">Directly imports into your active unfreezed table</div>
+        <input type="file" id="csvFileInput" accept=".csv" style="display:none" onchange="handleCSVFile(event)">
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-top:10px">
+        <button class="btn-o" onclick="downloadSampleCSV()">Download Template</button>
+        <button class="btn-b" onclick="closeImportModal()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+
+// ============================================================================
+// 12 COLOR THEME SYSTEM (PERSISTENT & DYNAMIC)
+// ============================================================================
+const THEMES_CONFIG = {
+  red:     { name: "Eveready Red",   primary: "#E30613", dark: "#b8050f", lightBg: "#fff5f5" },
+  blue:    { name: "Electric Blue",  primary: "#2563eb", dark: "#1d4ed8", lightBg: "#eff6ff" },
+  emerald: { name: "Emerald Green",  primary: "#059669", dark: "#047857", lightBg: "#ecfdf5" },
+  purple:  { name: "Royal Purple",   primary: "#7c3aed", dark: "#6d28d9", lightBg: "#f5f3ff" },
+  orange:  { name: "Amber Orange",   primary: "#ea580c", dark: "#c2410c", lightBg: "#fff7ed" },
+  cyan:    { name: "Cyberpunk Cyan", primary: "#06b6d4", dark: "#0891b2", lightBg: "#ecfeff" },
+  rose:    { name: "Deep Rose",      primary: "#e11d48", dark: "#be123c", lightBg: "#fff1f2" },
+  golden:  { name: "Goldenrod",      primary: "#d97706", dark: "#b45309", lightBg: "#fffbeb" },
+  teal:    { name: "Midnight Teal",  primary: "#0d9488", dark: "#0f766e", lightBg: "#f0fdfa" },
+  indigo:  { name: "Indigo Slate",   primary: "#4f46e5", dark: "#4338ca", lightBg: "#eef2ff" },
+  forest:  { name: "Forest Pine",    primary: "#16a34a", dark: "#15803d", lightBg: "#f0fdf4" },
+  carbon:  { name: "Carbon Onyx",    primary: "#374151", dark: "#1f2937", lightBg: "#f3f4f6" }
+};
+
+let currentThemeKey = localStorage.getItem('eveready_theme_v5.5') || 'red';
+
+function applySelectedTheme(themeKey) {
+  if(!THEMES_CONFIG[themeKey]) themeKey = 'red';
+  currentThemeKey = themeKey;
+  localStorage.setItem('eveready_theme_v5.5', themeKey);
+  
+  let conf = THEMES_CONFIG[themeKey];
+  document.documentElement.style.setProperty('--primary', conf.primary);
+  document.documentElement.style.setProperty('--primary-dark', conf.dark);
+  
+  // Update dropdown value
+  let sel = document.getElementById('themeSelect');
+  if(sel) sel.value = themeKey;
+  
+  // Re-render swatch selection
+  renderThemeSwatches();
+}
+
+function openThemeModal() {
+  document.getElementById('themeModal').classList.add('on');
+  renderThemeSwatches();
+}
+
+function closeThemeModal() {
+  document.getElementById('themeModal').classList.remove('on');
+}
+
+function renderThemeSwatches() {
+  let grid = document.getElementById('themeGridSwatches');
+  if(!grid) return;
+  
+  grid.innerHTML = Object.entries(THEMES_CONFIG).map(([key, conf], idx) => {
+    let isSel = key === currentThemeKey;
+    return `
+      <div onclick="applySelectedTheme('${key}')" style="cursor:pointer;border:${isSel?'2.5px solid #0f172a':'1px solid #cbd5e1'};border-radius:8px;padding:8px;background:#fff;text-align:center;box-shadow:${isSel?'0 2px 8px rgba(0,0,0,0.15)':'none'};transition:transform .15s" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+        <div style="height:32px;border-radius:6px;background:${conf.primary};margin-bottom:6px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:900">
+          ${isSel ? '✓' : ''}
+        </div>
+        <div style="font-size:10px;font-weight:700;color:#0f172a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${idx+1}. ${conf.name}</div>
+        <div style="font-size:8.5px;color:#64748b;font-family:monospace">${conf.primary}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+
+// ============================================================================
+// MASTER ADMIN AUTHENTICATION, USER DIRECTORY & TICKET ENGINE (VERSION 5.0)
+// ============================================================================
+const DEFAULT_ONLINE_USERS = [
+  { id: 'usr_1', username: 'admin', mobile: '9876543210', name: 'Master System Admin', role: 'Admin', password: 'admin123', status: 'Active', created: '2026-01-01' },
+  { id: 'usr_2', username: 'logistics', mobile: '9811122233', name: 'Logistics Plant Manager', role: 'Logistics Officer', password: 'pass123', status: 'Active', created: '2026-02-15' },
+  { id: 'usr_3', username: 'approver', mobile: '9822233344', name: 'Finance / Accounts Head', role: 'Accounts Approver', password: 'pass123', status: 'Active', created: '2026-03-10' },
+  { id: 'usr_4', username: 'auditor', mobile: '9833344455', name: 'Field Transport Auditor', role: 'Transporter Auditor', password: 'pass123', status: 'Blocked', created: '2026-04-01' }
+];
+
+const DEFAULT_TICKETS = [
+  { id: 'TKT-1001', date: '2026-04-16 09:30', userIdent: '9833344455', name: 'Field Transport Auditor', role: 'Transporter Auditor', reason: 'Account Blocked', remarks: 'Entered wrong password 3 times, kindly unblock and reset.', status: 'Pending', resolvedBy: null, newPass: null },
+  { id: 'TKT-1002', date: '2026-04-17 14:15', userIdent: 'rajesh.logistics', name: 'Rajesh Sharma', role: 'Logistics Officer', reason: 'Forgot Password', remarks: 'Unable to recall last month password.', status: 'Pending', resolvedBy: null, newPass: null }
+];
+
+let onlineUsers = JSON.parse(localStorage.getItem('eveready_users_v5') || 'null');
+if(!onlineUsers || !Array.isArray(onlineUsers) || onlineUsers.length === 0) {
+  onlineUsers = JSON.parse(JSON.stringify(DEFAULT_ONLINE_USERS));
+  localStorage.setItem('eveready_users_v5', JSON.stringify(onlineUsers));
+}
+
+let adminTickets = JSON.parse(localStorage.getItem('eveready_tickets_v5.3') || 'null');
+if(!adminTickets || !Array.isArray(adminTickets) || adminTickets.length === 0) {
+  adminTickets = JSON.parse(JSON.stringify(DEFAULT_TICKETS));
+  localStorage.setItem('eveready_tickets_v5.3', JSON.stringify(adminTickets));
+}
+
+let activeUser = JSON.parse(localStorage.getItem('eveready_active_session_v5') || 'null');
+
+function saveUsers() { localStorage.setItem('eveready_users_v5', JSON.stringify(onlineUsers)); }
+function saveTickets() { localStorage.setItem('eveready_tickets_v5.3', JSON.stringify(adminTickets)); }
+
+// Auth Views Switcher
+function switchAuthView(view) {
+  document.getElementById('loginView').style.display = view === 'login' ? 'block' : 'none';
+  document.getElementById('registerView').style.display = view === 'register' ? 'block' : 'none';
+  document.getElementById('ticketView').style.display = view === 'ticket' ? 'block' : 'none';
+}
+
+function quickFillDemo(role) {
+  if(role === 'admin') {
+    document.getElementById('uLoginId').value = 'admin';
+    document.getElementById('uLoginPass').value = 'admin123';
+  } else if(role === 'logistics') {
+    document.getElementById('uLoginId').value = 'logistics';
+    document.getElementById('uLoginPass').value = 'pass123';
+  } else if(role === 'approver') {
+    document.getElementById('uLoginId').value = 'approver';
+    document.getElementById('uLoginPass').value = 'pass123';
+  }
+  performOnlineLogin();
+}
+
+function performOnlineLogin() {
+  let uid = document.getElementById('uLoginId').value.trim().toLowerCase();
+  let pass = document.getElementById('uLoginPass').value;
+  if(!uid || !pass) { alert('Please enter Username / Mobile and Password.'); return; }
+
+  let u = onlineUsers.find(x => (x.username.toLowerCase() === uid || x.mobile === uid) && x.password === pass);
+
+  if(!u) {
+    // Check if user exists but password mismatch
+    let userExists = onlineUsers.find(x => x.username.toLowerCase() === uid || x.mobile === uid);
+    if(userExists) {
+      if(userExists.status === 'Blocked') {
+        alert('⚠️ ACCESS DENIED: This account has been BLOCKED by Master Admin.\n\nPlease click "Forgot / Blocked?" to raise a ticket to Master Admin.');
+        switchAuthView('ticket');
+        document.getElementById('tktUserIdent').value = uid;
+        document.getElementById('tktReason').value = 'Account Blocked';
+        return;
+      }
+      alert('❌ Incorrect Password.\n\nIf you forgot your password, please click "Forgot / Blocked?" to raise a ticket for Master Admin to reset.');
+      return;
+    }
+
+    // If new test mobile/username
+    if(pass.length >= 4) {
+      u = { id: 'usr_' + Date.now(), username: uid, mobile: uid.length===10?uid:'98' + Math.floor(10000000 + Math.random()*90000000), name: 'Staff ' + uid, role: 'Logistics Officer', password: pass, status: 'Active', created: new Date().toISOString().slice(0,10) };
+      onlineUsers.push(u);
+      saveUsers();
+    } else {
+      alert('User not found. Use Demo logins or Click "+ Create New Account".');
+      return;
+    }
+  }
+
+  if(u.status === 'Blocked') {
+    alert('⚠️ ACCOUNT BLOCKED: This account has been blocked by Master Admin.\n\nPlease raise a ticket to request unblocking.');
+    switchAuthView('ticket');
+    document.getElementById('tktUserIdent').value = uid;
+    document.getElementById('tktReason').value = 'Account Blocked';
+    return;
+  }
+
+  activeUser = u;
+  localStorage.setItem('eveready_active_session_v5', JSON.stringify(u));
+  applySelectedTheme(currentThemeKey);
+  applyUserSession();
+}
+
+function performOnlineRegister() {
+  let name = document.getElementById('regName').value.trim();
+  let mob = document.getElementById('regMobile').value.trim();
+  let uname = (document.getElementById('regUsername').value.trim() || mob).toLowerCase();
+  let role = document.getElementById('regRole').value;
+  let pass = document.getElementById('regPass').value;
+
+  if(!name || mob.length !== 10 || pass.length < 4) {
+    alert('Please complete Full Name, 10-digit Mobile number, and Password (min 4 characters).');
+    return;
+  }
+
+  let exists = onlineUsers.find(x => x.mobile === mob || x.username.toLowerCase() === uname);
+  if(exists) {
+    alert('Mobile number or Username already registered! Please sign in or raise a ticket.');
+    switchAuthView('login');
+    return;
+  }
+
+  let newUser = {
+    id: 'usr_' + Date.now(),
+    username: uname,
+    mobile: mob,
+    name: name,
+    role: role,
+    password: pass,
+    status: 'Active',
+    created: new Date().toISOString().slice(0,10)
+  };
+  onlineUsers.push(newUser);
+  saveUsers();
+
+  activeUser = newUser;
+  localStorage.setItem('eveready_active_session_v5', JSON.stringify(newUser));
+  applySelectedTheme(currentThemeKey);
+  applyUserSession();
+  alert(`Registration successful! Welcome ${name} (${role}). Master Admin has registered your account.`);
+}
+
+// User Ticket Submission (Forgot Password / Blocked Account)
+function submitPasswordTicket() {
+  let ident = document.getElementById('tktUserIdent').value.trim();
+  let reason = document.getElementById('tktReason').value;
+  let remarks = document.getElementById('tktRemarks').value.trim();
+
+  if(!ident) { alert('Please enter your Registered Mobile or Username.'); return; }
+
+  let user = onlineUsers.find(x => x.mobile === ident || x.username.toLowerCase() === ident.toLowerCase());
+  let tktId = 'TKT-' + Math.floor(1000 + Math.random()*9000);
+  let now = new Date();
+  let dateStr = now.toISOString().slice(0,10) + ' ' + now.toTimeString().slice(0,5);
+
+  let newTkt = {
+    id: tktId,
+    date: dateStr,
+    userIdent: ident,
+    name: user ? user.name : 'Unknown Member',
+    role: user ? user.role : 'Member',
+    reason: reason,
+    remarks: remarks || 'Password reset requested via online portal.',
+    status: 'Pending',
+    resolvedBy: null,
+    newPass: null
+  };
+
+  adminTickets.unshift(newTkt);
+  saveTickets();
+
+  alert(`✅ Ticket ${tktId} Raised Successfully!\n\nNotification sent to Master Admin.\nMaster Admin holds all rights to verify identity and reset your password.`);
+  switchAuthView('login');
+  document.getElementById('uLoginId').value = ident;
+}
+
+// Session Application & Master Admin Header Badge
+function applyUserSession() {
+  let pendingCount = adminTickets.filter(t => t.status === 'Pending').length;
+  let topTktEl = document.getElementById('topTktBadge');
+  if(topTktEl) topTktEl.textContent = pendingCount;
+
+  if(!activeUser) {
+    document.getElementById('authOverlay').style.display = 'flex';
+  } else {
+    document.getElementById('authOverlay').style.display = 'none';
+    let roleBadge = document.getElementById('activeUserRoleTag');
+    let nameBadge = document.getElementById('activeUserNameTag');
+    let adminBtn = document.getElementById('adminConsoleBtn');
+
+    if(roleBadge) {
+      roleBadge.textContent = (activeUser.role === 'Admin' ? '👑 ' : '👤 ') + activeUser.role;
+      roleBadge.style.background = activeUser.role === 'Admin' ? '#b91c1c' : '#15803d';
+    }
+    if(nameBadge) nameBadge.textContent = activeUser.name + ' (' + activeUser.username + ')';
+
+    // Show Master Admin Control button ONLY if activeUser is Admin
+    if(adminBtn) {
+      if(activeUser.role === 'Admin') {
+        adminBtn.style.display = 'inline-flex';
+      } else {
+        adminBtn.style.display = 'none';
+      }
+    }
+  }
+}
+
+function logoutOnlineUser() {
+  if(confirm("Are you sure you want to log out of Eveready Freight?")) {
+    localStorage.removeItem('eveready_active_session_v5');
+    activeUser = null;
+    let overlay = document.getElementById('authOverlay');
+    if(overlay) {
+      overlay.style.display = 'flex';
+      switchAuthView('login');
+      document.getElementById('uLoginPass').value = '';
+    }
+    let roleBadge = document.getElementById('activeUserRoleTag');
+    let nameBadge = document.getElementById('activeUserNameTag');
+    let adminBtn = document.getElementById('adminConsoleBtn');
+    if(roleBadge) roleBadge.textContent = 'Logged Out';
+    if(nameBadge) nameBadge.textContent = 'Please Sign In';
+    if(adminBtn) adminBtn.style.display = 'none';
+  }
+}
+
+// ============================================================================
+// MASTER ADMIN CONSOLE & TICKET RESOLUTION
+// ============================================================================
+function openAdminModal() {
+  if(!activeUser || activeUser.role !== 'Admin') {
+    alert('Access Denied: Only Master Admin can access this console.');
+    return;
+  }
+  document.getElementById('adminControlModal').classList.add('on');
+  switchAdminSubTab('tickets');
+  renderTicketsTable();
+  renderUsersTable();
+}
+
+function closeAdminModal() {
+  document.getElementById('adminControlModal').classList.remove('on');
+}
+
+function switchAdminSubTab(tab) {
+  let btn1 = document.getElementById('admTabBtn1');
+  let btn2 = document.getElementById('admTabBtn2');
+  let view1 = document.getElementById('admViewTickets');
+  let view2 = document.getElementById('admViewUsers');
+
+  if(tab === 'tickets') {
+    btn1.className = 'btn';
+    btn2.className = 'btn-b';
+    view1.style.display = 'block';
+    view2.style.display = 'none';
+    renderTicketsTable();
+  } else {
+    btn1.className = 'btn-b';
+    btn2.className = 'btn';
+    view1.style.display = 'none';
+    view2.style.display = 'block';
+    renderUsersTable();
+  }
+}
+
+function renderTicketsTable() {
+  let tb = document.getElementById('ticketsTblBody');
+  let pendingCount = adminTickets.filter(t => t.status === 'Pending').length;
+  let pendingBadge = document.getElementById('pendingTktCount');
+  if(pendingBadge) pendingBadge.textContent = pendingCount;
+  let topTktEl = document.getElementById('topTktBadge');
+  if(topTktEl) topTktEl.textContent = pendingCount;
+
+  if(adminTickets.length === 0) {
+    tb.innerHTML = '<tr><td colspan="8" style="padding:16px;text-align:center;color:#94a3b8">No tickets raised</td></tr>';
+    return;
+  }
+
+  tb.innerHTML = adminTickets.map(t => {
+    let stBadge = t.status === 'Pending' ? '<span class="badge badge-rej">Pending Admin</span>' : '<span class="badge badge-appr">Resolved</span>';
+    let actionBtn = t.status === 'Pending' 
+      ? `<button class="btn" style="padding:3px 8px;font-size:10px" onclick="resolveTicket('${t.id}')">🔑 Reset & Unblock</button>
+         <button class="btn-b" style="padding:3px 8px;font-size:10px;background:#64748b" onclick="dismissTicket('${t.id}')">Dismiss</button>`
+      : `<span style="font-size:10px;color:#15803d;font-weight:700">✓ Done: ${t.newPass || 'Updated'}</span>`;
+
+    return `<tr>
+      <td style="font-weight:800;color:var(--primary)">${t.id}</td>
+      <td style="font-size:10px;color:#64748b">${t.date}</td>
+      <td><b>${t.userIdent}</b></td>
+      <td>${t.name} <span class="badge badge-reg">${t.role}</span></td>
+      <td><span style="font-weight:700;color:#c2410c">${t.reason}</span></td>
+      <td style="max-width:220px;white-space:normal;text-align:left;font-size:10.5px">${t.remarks}</td>
+      <td>${stBadge}</td>
+      <td>${actionBtn}</td>
+    </tr>`;
+  }).join('');
+}
+
+function resolveTicket(tktId) {
+  let t = adminTickets.find(x => x.id === tktId);
+  if(!t) return;
+
+  let user = onlineUsers.find(x => x.mobile === t.userIdent || x.username.toLowerCase() === t.userIdent.toLowerCase());
+  let targetDesc = user ? `${user.name} (${user.username})` : t.userIdent;
+
+  let newPass = prompt(`MASTER ADMIN OVERRIDE:\nEnter new password for user: ${targetDesc}`, "pass" + Math.floor(100 + Math.random()*900));
+  if(newPass === null) return;
+  newPass = newPass.trim();
+  if(newPass.length < 4) { alert("Password must be at least 4 characters!"); return; }
+
+  if(user) {
+    user.password = newPass;
+    user.status = 'Active'; // Automatically unblock
+    saveUsers();
+  }
+
+  t.status = 'Resolved';
+  t.resolvedBy = activeUser.name;
+  t.newPass = newPass;
+  saveTickets();
+
+  renderTicketsTable();
+  renderUsersTable();
+  applySelectedTheme(currentThemeKey);
+  applyUserSession();
+  alert(`✅ TICKET RESOLVED!\n\nUser: ${targetDesc}\nAccount Status: Unblocked & Active\nNew Password Set: "${newPass}"\n\nPlease inform the member.`);
+}
+
+function dismissTicket(tktId) {
+  if(confirm("Dismiss this ticket without changing password?")) {
+    let t = adminTickets.find(x => x.id === tktId);
+    if(t) {
+      t.status = 'Dismissed';
+      saveTickets();
+      renderTicketsTable();
+      applySelectedTheme(currentThemeKey);
+  applyUserSession();
+    }
+  }
+}
+
+function renderUsersTable() {
+  let tb = document.getElementById('usersTblBody');
+  if(!tb) return;
+
+  tb.innerHTML = onlineUsers.map((u, i) => {
+    let statusClass = u.status === 'Active' ? 'badge-appr' : 'badge-rej';
+    let blockBtn = u.status === 'Active'
+      ? `<button style="background:#b91c1c;color:#fff;border:none;padding:2px 6px;border-radius:4px;cursor:pointer;font-size:9.5px;font-weight:700" onclick="toggleUserStatus('${u.id}')">🚫 Block User</button>`
+      : `<button style="background:#15803d;color:#fff;border:none;padding:2px 6px;border-radius:4px;cursor:pointer;font-size:9.5px;font-weight:700" onclick="toggleUserStatus('${u.id}')">✓ Unblock</button>`;
+
+    return `<tr>
+      <td style="color:#64748b">${u.id}</td>
+      <td><b>${u.username}</b></td>
+      <td>${u.name}</td>
+      <td>${u.mobile}</td>
+      <td><span class="badge badge-reg">${u.role}</span></td>
+      <td><span class="badge ${statusClass}">${u.status || 'Active'}</span></td>
+      <td style="font-family:monospace;font-weight:700;color:#0f172a">${u.password}</td>
+      <td style="display:flex;gap:4px;justify-content:center">
+        <button class="btn" style="padding:2px 6px;font-size:9.5px" onclick="adminResetUserPassword('${u.id}')">🔑 Reset Pass</button>
+        <button class="btn-b" style="padding:2px 6px;font-size:9.5px" onclick="adminChangeRole('${u.id}')">Role</button>
+        ${u.username !== 'admin' ? blockBtn : '<span style="font-size:9.5px;color:#15803d;font-weight:800">Master</span>'}
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+function adminResetUserPassword(userId) {
+  let u = onlineUsers.find(x => x.id === userId);
+  if(!u) return;
+
+  let newPass = prompt(`Master Admin Password Reset for ${u.name} (${u.username}):`, "pass" + Math.floor(100 + Math.random()*900));
+  if(newPass === null) return;
+  newPass = newPass.trim();
+  if(newPass.length < 4) { alert("Password must be at least 4 characters!"); return; }
+
+  u.password = newPass;
+  saveUsers();
+  renderUsersTable();
+  alert(`Password for ${u.name} updated to "${newPass}".`);
+}
+
+function toggleUserStatus(userId) {
+  let u = onlineUsers.find(x => x.id === userId);
+  if(!u || u.username === 'admin') return;
+
+  let next = u.status === 'Active' ? 'Blocked' : 'Active';
+  if(confirm(`Are you sure you want to mark ${u.name} as ${next}?`)) {
+    u.status = next;
+    saveUsers();
+    renderUsersTable();
+  }
+}
+
+function adminChangeRole(userId) {
+  let u = onlineUsers.find(x => x.id === userId);
+  if(!u) return;
+
+  let newRole = prompt(`Change Role for ${u.name}:\n(Admin / Logistics Officer / Accounts Approver / Transporter Auditor)`, u.role);
+  if(newRole && newRole.trim()) {
+    u.role = newRole.trim();
+    saveUsers();
+    renderUsersTable();
+  }
+}
+
+function addNewUserPrompt() {
+  let name = prompt("Enter Member Full Name:");
+  if(!name) return;
+  let mob = prompt("Enter 10-digit Mobile Number:");
+  if(!mob || mob.length !== 10) { alert("Invalid mobile"); return; }
+  let uname = prompt("Enter Username / ID:", mob);
+  if(!uname) return;
+  let role = prompt("Enter Role (Admin / Logistics Officer / Accounts Approver / Transporter Auditor):", "Logistics Officer");
+  let pass = prompt("Enter Temporary Password:", "pass123");
+
+  let newUser = {
+    id: 'usr_' + Date.now(),
+    username: uname.trim().toLowerCase(),
+    mobile: mob.trim(),
+    name: name.trim(),
+    role: role ? role.trim() : 'Logistics Officer',
+    password: pass ? pass.trim() : 'pass123',
+    status: 'Active',
+    created: new Date().toISOString().slice(0,10)
+  };
+  onlineUsers.push(newUser);
+  saveUsers();
+  renderUsersTable();
+  alert(`User ${name} added successfully!`);
+}
+
+const TDS = [0, 1, 2, 5, 6, 10];
+const GST = [0, 0.25, 3, 5, 6, 12, 18, 28];
+
+const defaultBills = [
+  {id:1, billNo:'EB/24/001', plantLocation:'Jammu Plant', truckNo:'DL-01-AB-1234', grNo:'GR-10291', grDate:'2026-04-05', weight:14.2, freightRate:8500, sapDocNo:'500129841', vendor:'VRL Logistics', fromLoc:'Delhi', toLoc:'Mumbai', billDate:'2026-04-12', billAmount:120700, tdsRate:2, gstCategory:'IGST', gstType:'Registered', gstRate:18, isRCM:false, matReceivedDate:'2026-04-11', actualDays:6, leadTime:3, delayDays:3, delayPenalty:3000, dieselIncreased:1500, detentionExtra:2000, twoPointCharges:1200, status:'Approved'},
+  {id:2, billNo:'EB/24/002', plantLocation:'Kolkata Plant', truckNo:'WB-02-XY-9876', grNo:'GR-84920', grDate:'2026-04-06', weight:18.5, freightRate:6400, sapDocNo:'500129842', vendor:'TCI Freight', fromLoc:'Kolkata', toLoc:'Patna', billDate:'2026-04-13', billAmount:118400, tdsRate:1, gstCategory:'IGST', gstType:'RCM-GST', gstRate:5, isRCM:true, matReceivedDate:'2026-04-14', actualDays:8, leadTime:4, delayDays:4, delayPenalty:4500, dieselIncreased:0, detentionExtra:1000, twoPointCharges:0, status:'Pending'},
+  {id:3, billNo:'EB/24/003', plantLocation:'Chennai Plant', truckNo:'TN-09-CC-4567', grNo:'GR-77312', grDate:'2026-04-08', weight:9.0, freightRate:11200, sapDocNo:'500129843', vendor:'Gati-KWE', fromLoc:'Chennai', toLoc:'Bengaluru', billDate:'2026-04-14', billAmount:100800, tdsRate:2, gstCategory:'IGST', gstType:'Registered', gstRate:18, isRCM:false, matReceivedDate:'2026-04-10', actualDays:2, leadTime:2, delayDays:0, delayPenalty:0, dieselIncreased:800, detentionExtra:0, twoPointCharges:0, status:'Approved'},
+  {id:4, billNo:'EB/24/004', plantLocation:'Jammu Plant', truckNo:'JK-02-AU-8899', grNo:'GR-90342', grDate:'2026-04-09', weight:22.0, freightRate:5100, sapDocNo:'500129844', vendor:'Safechem Express', fromLoc:'Jammu', toLoc:'Delhi', billDate:'2026-04-15', billAmount:112200, tdsRate:2, gstCategory:'IGST', gstType:'RCM-GST', gstRate:5, isRCM:true, matReceivedDate:'2026-04-16', actualDays:7, leadTime:3, delayDays:4, delayPenalty:4500, dieselIncreased:2100, detentionExtra:3500, twoPointCharges:1800, status:'Pending'},
+  {id:5, billNo:'EB/24/005', plantLocation:'Hyderabad Plant', truckNo:'MH-12-PQ-3344', grNo:'GR-61204', grDate:'2026-04-10', weight:16.8, freightRate:7800, sapDocNo:'500129845', vendor:'VRL Logistics', fromLoc:'Hyderabad', toLoc:'Pune', billDate:'2026-04-16', billAmount:131040, tdsRate:2, gstCategory:'CGST+SGST', gstType:'Registered', gstRate:18, isRCM:false, matReceivedDate:'2026-04-13', actualDays:3, leadTime:3, delayDays:0, delayPenalty:0, dieselIncreased:0, detentionExtra:0, twoPointCharges:0, status:'Approved'}
+];
+
+let bills = JSON.parse(localStorage.getItem('freight5.3') || 'null');
+if(!bills || !Array.isArray(bills) || bills.length === 0) {
+  bills = JSON.parse(JSON.stringify(defaultBills));
+}
+
+let editId = null, smallId = null, selTDS = 2, selGSTType = 'Registered', selGSTRate = 18, selRCM = false, gstForBill = false;
+
+function delayFormula(d) {
+  d = Math.max(0, d);
+  if(d <= 0) return 0;
+  if(d < 4) return d * 1000;
+  return ((d - 3) * 1500) + 3000;
+}
+
+function calcActualDays(grDate, matDate) {
+  if(!grDate || !matDate) return 0;
+  let gd = new Date(grDate);
+  let md = new Date(matDate);
+  let diff = Math.floor((md - gd) / (1000 * 60 * 60 * 24));
+  return diff > 0 ? diff : 0;
+}
+
+function calc(b) {
+  b.billAmount = parseFloat(b.billAmount) || 0;
+  b.plantLocation = b.plantLocation || 'Jammu Plant';
+  b.gstCategory = b.gstCategory || 'IGST';
+  b.tdsRate = parseFloat(b.tdsRate) || 0;
+  b.gstRate = parseFloat(b.gstRate) || 0;
+  b.tdsAmount = Math.round(b.billAmount * b.tdsRate / 100);
+  b.gstAmount = Math.round(b.billAmount * b.gstRate / 100);
+  if(b.grDate && b.matReceivedDate) {
+    b.actualDays = calcActualDays(b.grDate, b.matReceivedDate);
+  } else if(b.actualDays == null) {
+    b.actualDays = 0;
+  }
+  b.leadTime = parseFloat(b.leadTime) || 0;
+  b.delayDays = Math.max(0, (b.actualDays || 0) - b.leadTime);
+  b.delayPenalty = delayFormula(b.delayDays);
+  b.dieselIncreased = parseFloat(b.dieselIncreased) || 0;
+  b.detentionExtra = parseFloat(b.detentionExtra) || 0;
+  b.twoPointCharges = parseFloat(b.twoPointCharges) || 0;
+  let gstPay = b.isRCM ? 0 : b.gstAmount;
+  b.netPayable = b.billAmount - b.tdsAmount - b.delayPenalty + b.dieselIncreased + b.detentionExtra + b.twoPointCharges + gstPay;
+  return b;
+}
+
+bills.forEach(calc);
+function save() { localStorage.setItem('freight5.3', JSON.stringify(bills)); }
+
+function resetSampleData() {
+  if(confirm("Reset all records to fresh default consignments?")) {
+    bills = JSON.parse(JSON.stringify(defaultBills));
+    bills.forEach(calc);
+    save();
+    render();
+    refreshVisuals();
+    populateVendorFilter();
+    generateDynamicReport();
+  }
+}
+
+function initRatePickers() {
+  document.getElementById('tdsGrid').innerHTML = TDS.map(r => `<button class="rate-btn ${r===selTDS?'sel':''}" data-r="${r}" onclick="pickTDS(${r})">${r}%</button>`).join('');
+  document.getElementById('gReg').innerHTML = GST.map(r => `<button class="rate-btn" onclick="pickGST('Registered',${r},false)">${r}%</button>`).join('');
+  document.getElementById('gRcm').innerHTML = GST.map(r => `<button class="rate-btn" onclick="pickGST('RCM-GST',${r},true)">${r}%</button>`).join('');
+}
+
+function pickTDS(r) {
+  selTDS = r;
+  document.querySelectorAll('#tdsGrid .rate-btn').forEach(b => b.classList.toggle('sel', parseInt(b.dataset.r) === r));
+  recalc();
+}
+
+function pickGST(type, rate, isR) {
+  selGSTType = type; selGSTRate = rate; selRCM = isR;
+  if(gstForBill) {
+    let b = bills.find(x => x.id == smallId);
+    if(b) { b.gstType = type; b.gstRate = rate; b.isRCM = isR; calc(b); save(); render(); refreshVisuals(); }
+    gstForBill = false;
+    closeGST();
+    return;
+  }
+  document.getElementById('fGstT').value = type;
+  document.getElementById('fGstRate').value = rate;
+  document.getElementById('fRCM').value = isR;
+  document.getElementById('fGstRshow').value = rate + '%';
+  document.getElementById('gstShow').innerHTML = `<b>${type} - ${rate}% ${isR ? '<span style="color:#c2410c">(RCM)</span>' : ''}</b>`;
+  closeGST();
+  recalc();
+}
+
+function recalc() {
+  let amt = parseFloat(document.getElementById('fAmt').value) || 0;
+  let grDate = document.getElementById('fGRDate').value;
+  let matDate = document.getElementById('fMatDt').value;
+  let actDays = calcActualDays(grDate, matDate);
+  let lead = parseFloat(document.getElementById('fLead').value) || 0;
+  let delayDays = Math.max(0, actDays - lead);
+  let delayPen = delayFormula(delayDays);
+  let diesel = parseFloat(document.getElementById('fDiesel').value) || 0;
+  let detExtra = parseFloat(document.getElementById('fDetentionExtra').value) || 0;
+  let twoPC = parseFloat(document.getElementById('fTwoPoint').value) || 0;
+  let tds = Math.round(amt * selTDS / 100);
+  let gstR = parseFloat(document.getElementById('fGstRate').value) || 0;
+  let gst = Math.round(amt * gstR / 100);
+  let isR = document.getElementById('fRCM').value === 'true';
+
+  document.getElementById('fTdsA').value = tds;
+  document.getElementById('fGstA').value = gst;
+  document.getElementById('fActDays').value = actDays;
+  document.getElementById('fDelayDays').value = delayDays;
+  document.getElementById('fDelayPen').value = delayPen;
+
+  let net = amt - tds - delayPen + diesel + detExtra + twoPC + (isR ? 0 : gst);
+  document.getElementById('fNet').textContent = '₹' + net.toLocaleString('en-IN');
+}
+
+function openBill(id=null) {
+  editId = id;
+  document.getElementById('bModal').classList.add('on');
+  applySelectedTheme(currentThemeKey);
+  applyUserSession();
+  initRatePickers();
+  if(id) {
+    let b = bills.find(x => x.id == id);
+    document.getElementById('bTitle').textContent = 'Edit Consignment — ' + b.billNo;
+    document.getElementById('fNo').value = b.billNo;
+    document.getElementById('fPlantLoc').value = b.plantLocation || 'Jammu Plant';
+    document.getElementById('fTruckNo').value = b.truckNo || '';
+    document.getElementById('fGRNo').value = b.grNo || '';
+    document.getElementById('fGRDate').value = b.grDate || '';
+    document.getElementById('fWeight').value = b.weight || '';
+    document.getElementById('fFreightRate').value = b.freightRate || '';
+    document.getElementById('fSAPDoc').value = b.sapDocNo || '';
+    document.getElementById('fDt').value = b.billDate;
+    document.getElementById('fVen').value = b.vendor;
+    document.getElementById('fFrom').value = b.fromLoc;
+    document.getElementById('fTo').value = b.toLoc;
+    document.getElementById('fAmt').value = b.billAmount;
+    document.getElementById('fMatDt').value = b.matReceivedDate || '';
+    document.getElementById('fActDays').value = b.actualDays || 0;
+    document.getElementById('fLead').value = b.leadTime || '';
+    document.getElementById('fDelayDays').value = b.delayDays || 0;
+    document.getElementById('fDelayPen').value = b.delayPenalty || 0;
+    document.getElementById('fDiesel').value = b.dieselIncreased || 0;
+    document.getElementById('fDetentionExtra').value = b.detentionExtra || 0;
+    document.getElementById('fTwoPoint').value = b.twoPointCharges || 0;
+    document.getElementById('fStat').value = b.status;
+    selTDS = b.tdsRate; selGSTType = b.gstType; selGSTRate = b.gstRate; selRCM = b.isRCM;
+    document.getElementById('fGstCat').value = b.gstCategory || 'IGST';
+    document.getElementById('fGstT').value = b.gstType;
+    document.getElementById('fGstRate').value = b.gstRate;
+    document.getElementById('fGstRshow').value = b.gstRate + '%';
+    document.getElementById('fRCM').value = b.isRCM;
+    document.getElementById('gstShow').innerHTML = `<b>${b.gstType} - ${b.gstRate}% ${b.isRCM ? '(RCM)' : ''}</b>`;
+  } else {
+    document.getElementById('bTitle').textContent = 'New Consignment Bill Entry';
+    ['fNo','fPlantLoc','fTruckNo','fGRNo','fGRDate','fWeight','fFreightRate','fSAPDoc','fVen','fFrom','fTo','fAmt','fMatDt','fActDays','fLead','fDiesel','fDetentionExtra','fTwoPoint'].forEach(i => {
+      let el = document.getElementById(i); if(el) el.value = '';
+    });
+    document.getElementById('fDt').value = new Date().toISOString().slice(0,10);
+    selTDS = 2; selGSTType = 'Registered'; selGSTRate = 18; selRCM = false;
+    document.getElementById('fGstT').value = 'Registered';
+    document.getElementById('fGstRate').value = 18;
+    document.getElementById('fGstRshow').value = '18%';
+    document.getElementById('fRCM').value = false;
+    document.getElementById('gstShow').innerHTML = '<b>Registered - 18%</b>';
+    document.getElementById('fStat').value = 'Pending';
+    document.getElementById('fGstCat').value = 'IGST';
+  }
+  document.querySelectorAll('#tdsGrid .rate-btn').forEach(b => b.classList.toggle('sel', parseInt(b.dataset.r) === selTDS));
+  recalc();
+}
+
+function closeBill() { document.getElementById('bModal').classList.remove('on'); }
+function openGST() { document.getElementById('gModal').classList.add('on'); }
+function closeGST() { document.getElementById('gModal').classList.remove('on'); }
+
+function saveBill() {
+  let amt = parseFloat(document.getElementById('fAmt').value) || 0;
+  if(!amt) { alert('Please enter Bill Amount'); return; }
+  let grDate = document.getElementById('fGRDate').value;
+  let matDate = document.getElementById('fMatDt').value;
+  let actDays = calcActualDays(grDate, matDate);
+  let lead = parseFloat(document.getElementById('fLead').value) || 0;
+  let dDays = Math.max(0, actDays - lead);
+  let dPen = delayFormula(dDays);
+
+  let obj = {
+    billNo: document.getElementById('fNo').value || ('EB/' + Math.floor(1000 + Math.random()*9000)),
+    plantLocation: document.getElementById('fPlantLoc').value.trim() || 'Jammu Plant',
+    truckNo: (document.getElementById('fTruckNo').value || '').toUpperCase(),
+    grNo: document.getElementById('fGRNo').value,
+    grDate: grDate,
+    weight: parseFloat(document.getElementById('fWeight').value) || 0,
+    freightRate: parseFloat(document.getElementById('fFreightRate').value) || 0,
+    sapDocNo: document.getElementById('fSAPDoc').value,
+    billDate: document.getElementById('fDt').value || new Date().toISOString().slice(0,10),
+    vendor: document.getElementById('fVen').value || 'Unassigned Carrier',
+    fromLoc: document.getElementById('fFrom').value || 'Hub',
+    toLoc: document.getElementById('fTo').value || 'Depot',
+    billAmount: amt,
+    tdsRate: selTDS,
+    gstCategory: document.getElementById('fGstCat').value || 'IGST',
+    gstType: document.getElementById('fGstT').value || 'Registered',
+    gstRate: parseFloat(document.getElementById('fGstRate').value) || 18,
+    isRCM: document.getElementById('fRCM').value === 'true',
+    matReceivedDate: matDate,
+    actualDays: actDays,
+    leadTime: lead,
+    delayDays: dDays,
+    delayPenalty: dPen,
+    dieselIncreased: parseFloat(document.getElementById('fDiesel').value) || 0,
+    detentionExtra: parseFloat(document.getElementById('fDetentionExtra').value) || 0,
+    twoPointCharges: parseFloat(document.getElementById('fTwoPoint').value) || 0,
+    status: document.getElementById('fStat').value
+  };
+
+  calc(obj);
+  if(editId) {
+    Object.assign(bills.find(x => x.id == editId), obj);
+  } else {
+    obj.id = Date.now();
+    bills.unshift(obj);
+  }
+  save();
+  closeBill();
+  render();
+  refreshVisuals();
+  populateVendorFilter();
+  generateDynamicReport();
+}
+
+function deleteBill(id) {
+  if(confirm("Delete this consignment record?")) {
+    bills = bills.filter(x => x.id != id);
+    save();
+    render();
+    refreshVisuals();
+    generateDynamicReport();
+  }
+}
+
+// DIRECT INLINE CELL UPDATE HANDLER (AUTOMATIC RECALCULATION)
+function updateCellDirect(el, id, field) {
+  let b = bills.find(x => x.id == id);
+  if(!b) return;
+  let text = el.innerText.trim().replace(/^₹|,|MT|Days|d|%/g, '').trim();
+  if(['billAmount','weight','freightRate','actualDays','leadTime','delayDays','delayPenalty','dieselIncreased','detentionExtra','twoPointCharges','gstRate','tdsRate'].includes(field)) {
+    b[field] = parseFloat(text) || 0;
+  } else {
+    b[field] = text;
+  }
+  if(field == 'grDate' || field == 'matReceivedDate') {
+    b.actualDays = calcActualDays(b.grDate, b.matReceivedDate);
+  }
+  calc(b);
+  save();
+  render();
+  refreshVisuals();
+  generateDynamicReport();
+}
+
+function updateGSTCategoryDirect(id, val) {
+  let b = bills.find(x => x.id == id);
+  if(b) {
+    b.gstCategory = val;
+    save();
+    render();
+    refreshVisuals();
+    generateDynamicReport();
+  }
+}
+
+function updateStatusDirect(id, val) {
+  let b = bills.find(x => x.id == id);
+  if(b) {
+    b.status = val;
+    save();
+    render();
+    refreshVisuals();
+    generateDynamicReport();
+  }
+}
+
+// TAB NAVIGATION
+function switchTab(tabId) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.view-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById(`btn-tab-${tabId}`).classList.add('active');
+  document.getElementById(`tab-${tabId}`).classList.add('active');
+  if(tabId === 'dashboard') { refreshVisuals(); }
+  if(tabId === 'reports') { generateDynamicReport(); }
+}
+
+function populateVendorFilter() {
+  let vens = [...new Set(bills.map(b => b.vendor))].filter(Boolean);
+  let cur = document.getElementById('venF').value;
+  document.getElementById('venF').innerHTML = '<option value="">Vendor: All</option>' + vens.map(v => `<option value="${v}">${v}</option>`).join('');
+  document.getElementById('venF').value = cur;
+}
+
+// RENDER UNFREEZED ACTIVE MASTER TABLE
+function render() {
+  let q = (document.getElementById('srch').value || '').toLowerCase();
+  let sf = document.getElementById('statF').value;
+  let vf = document.getElementById('venF').value;
+  let srt = document.getElementById('sort').value;
+
+  let fil = [...bills];
+  if(q) fil = fil.filter(b => (b.billNo + ' ' + (b.plantLocation||'') + ' ' + (b.truckNo||'') + ' ' + (b.grNo||'') + ' ' + b.vendor + ' ' + (b.gstCategory||'') + ' ' + (b.sapDocNo||'') + ' ' + b.fromLoc + ' ' + b.toLoc).toLowerCase().includes(q));
+  if(sf) fil = fil.filter(b => b.status === sf);
+  if(vf) fil = fil.filter(b => b.vendor === vf);
+
+  if(srt === 'highF') fil.sort((a,b) => b.billAmount - a.billAmount);
+  if(srt === 'highPen') fil.sort((a,b) => b.delayPenalty - a.delayPenalty);
+  if(srt === 'highNet') fil.sort((a,b) => b.netPayable - a.netPayable);
+  if(srt === 'recent') fil.sort((a,b) => new Date(b.billDate) - new Date(a.billDate));
+
+  let tb = document.getElementById('tb');
+  if(fil.length === 0) {
+    tb.innerHTML = '<tr><td colspan="29" style="padding:20px;text-align:center;color:#94a3b8">No records match criteria</td></tr>';
+  } else {
+    tb.innerHTML = fil.map((b, idx) => {
+      return `<tr>
+        <td style="color:#64748b;font-weight:700">${idx+1}</td>
+        <td class="edit-cell" contenteditable="true" onblur="updateCellDirect(this,${b.id},'billNo')"><b>${b.billNo}</b></td>
+        <td class="edit-cell" contenteditable="true" onblur="updateCellDirect(this,${b.id},'billDate')">${b.billDate}</td>
+        <td class="edit-cell" style="background:#ecfdf5;font-weight:700;color:#065f46" contenteditable="true" onblur="updateCellDirect(this,${b.id},'plantLocation')">${b.plantLocation||'Jammu Plant'}</td>
+        <td class="edit-cell" contenteditable="true" onblur="updateCellDirect(this,${b.id},'vendor')">${b.vendor}</td>
+        <td class="edit-cell" contenteditable="true" onblur="updateCellDirect(this,${b.id},'fromLoc')">${b.fromLoc}</td>
+        <td class="edit-cell" contenteditable="true" onblur="updateCellDirect(this,${b.id},'toLoc')">${b.toLoc}</td>
+        <td class="edit-cell gr-cell" contenteditable="true" onblur="updateCellDirect(this,${b.id},'truckNo')"><b>${b.truckNo||'-'}</b></td>
+        <td class="edit-cell gr-cell" contenteditable="true" onblur="updateCellDirect(this,${b.id},'grNo')">${b.grNo||'-'}</td>
+        <td class="edit-cell gr-cell" contenteditable="true" onblur="updateCellDirect(this,${b.id},'grDate')">${b.grDate||'-'}</td>
+        <td class="edit-cell gr-cell" contenteditable="true" onblur="updateCellDirect(this,${b.id},'weight')">${b.weight||0}</td>
+        <td class="edit-cell gr-cell" contenteditable="true" onblur="updateCellDirect(this,${b.id},'freightRate')">₹${(b.freightRate||0).toLocaleString()}</td>
+        <td class="edit-cell gr-cell" contenteditable="true" onblur="updateCellDirect(this,${b.id},'sapDocNo')">${b.sapDocNo||'-'}</td>
+        <td class="edit-cell" contenteditable="true" onblur="updateCellDirect(this,${b.id},'billAmount')">₹${b.billAmount.toLocaleString()}</td>
+        <td><span class="chip" onclick="openSmall(${b.id})">${b.tdsRate}% ▼</span></td>
+        <td style="font-weight:600">₹${b.tdsAmount.toLocaleString()}</td>
+        <td>
+          <select style="padding:3px 5px;border-radius:5px;font-size:10.5px;font-weight:700;border:1.5px solid #93c5fd;background:#eff6ff;color:#1e40af;cursor:pointer" onchange="updateGSTCategoryDirect(${b.id}, this.value)">
+            <option value="IGST" ${(b.gstCategory==='IGST'||!b.gstCategory)?'selected':''}>IGST</option>
+            <option value="CGST+SGST" ${b.gstCategory==='CGST+SGST'?'selected':''}>CGST+SGST</option>
+            <option value="Exempt" ${b.gstCategory==='Exempt'?'selected':''}>Exempt</option>
+          </select>
+        </td>
+        <td><span class="badge ${b.isRCM?'badge-rcm':'badge-reg'}" style="cursor:pointer" onclick="openGSTFor(${b.id})">${b.gstType} ▼</span></td>
+        <td class="edit-cell" contenteditable="true" onblur="updateCellDirect(this,${b.id},'gstRate')">${b.gstRate}%</td>
+        <td>₹${b.gstAmount.toLocaleString()}</td>
+        <td>${b.isRCM ? '<span style="color:#c2410c;font-weight:700">RCM</span>' : '<span style="color:#15803d;font-weight:700">+GST</span>'}</td>
+        <td class="edit-cell mat-cell" contenteditable="true" onblur="updateCellDirect(this,${b.id},'matReceivedDate')">${b.matReceivedDate||'-'}</td>
+        <td style="background:#ede9fe;font-weight:800;color:#5b21b6">${b.actualDays||0} Days</td>
+        <td class="edit-cell mat-cell" contenteditable="true" onblur="updateCellDirect(this,${b.id},'leadTime')">${b.leadTime||0}</td>
+        <td style="background:#ddd6fe;font-weight:800">${b.delayDays||0}</td>
+        <td style="background:#fee2e2;font-weight:800;color:#b91c1c">₹${(b.delayPenalty||0).toLocaleString()}</td>
+        <td class="edit-cell green-cell" contenteditable="true" onblur="updateCellDirect(this,${b.id},'dieselIncreased')">₹${(b.dieselIncreased||0).toLocaleString()}</td>
+        <td class="edit-cell green-cell" contenteditable="true" onblur="updateCellDirect(this,${b.id},'detentionExtra')">₹${(b.detentionExtra||0).toLocaleString()}</td>
+        <td class="edit-cell green-cell" contenteditable="true" onblur="updateCellDirect(this,${b.id},'twoPointCharges')">₹${(b.twoPointCharges||0).toLocaleString()}</td>
+        <td style="background:#0f172a;color:#facc15;font-weight:900">₹${b.netPayable.toLocaleString()}</td>
+        <td>
+          <select style="padding:2px 4px;border-radius:4px;font-size:10px;font-weight:700;border:1px solid #cbd5e1" onchange="updateStatusDirect(${b.id}, this.value)">
+            <option ${b.status==='Pending'?'selected':''}>Pending</option>
+            <option ${b.status==='Approved'?'selected':''}>Approved</option>
+            <option ${b.status==='Rejected'?'selected':''}>Rejected</option>
+          </select>
+        </td>
+        <td>
+          <button class="btn-b" style="padding:2px 6px;font-size:9.5px" onclick="openBill(${b.id})">Form</button>
+          <button style="background:#ef4444;color:#fff;border:none;padding:2px 6px;border-radius:4px;cursor:pointer;font-size:9.5px" onclick="deleteBill(${b.id})">✕</button>
+        </td>
+      </tr>`;
+    }).join('');
+  }
+
+  renderKPI();
+}
+
+function renderKPI() {
+  let totGross = bills.reduce((s,b) => s + b.billAmount, 0);
+  let totNet = bills.reduce((s,b) => s + b.netPayable, 0);
+  let totTDS = bills.reduce((s,b) => s + b.tdsAmount, 0);
+  let totPen = bills.reduce((s,b) => s + b.delayPenalty, 0);
+  let totAddons = bills.reduce((s,b) => s + (b.dieselIncreased||0) + (b.detentionExtra||0) + (b.twoPointCharges||0), 0);
+  let totWeight = bills.reduce((s,b) => s + (b.weight||0), 0);
+  let pendingPay = bills.filter(b => b.status === 'Pending').reduce((s,b) => s + b.netPayable, 0);
+  let avgDelay = bills.length ? (bills.reduce((s,b) => s + (b.delayDays||0), 0) / bills.length).toFixed(1) : 0;
+
+  document.getElementById('kpiGross').textContent = '₹' + totGross.toLocaleString('en-IN');
+  document.getElementById('kpiNet').textContent = '₹' + totNet.toLocaleString('en-IN');
+  document.getElementById('kpiPendingPay').textContent = 'Pending: ₹' + pendingPay.toLocaleString('en-IN');
+  document.getElementById('kpiPenalty').textContent = '₹' + totPen.toLocaleString('en-IN');
+  document.getElementById('kpiDelayAvg').textContent = 'Avg Delay: ' + avgDelay + ' Days/Trip';
+  document.getElementById('kpiTds').textContent = '₹' + totTDS.toLocaleString('en-IN');
+  document.getElementById('kpiAddons').textContent = '₹' + totAddons.toLocaleString('en-IN');
+  document.getElementById('kpiWeight').textContent = totWeight.toFixed(1) + ' MT';
+  document.getElementById('kpiBillsCount').textContent = bills.length + ' Consignments Processed';
+
+  let m = {}; bills.forEach(b => m[b.fromLoc] = (m[b.fromLoc]||0) + b.billAmount);
+  let mx = Math.max(...Object.values(m), 1);
+  document.getElementById('c1').innerHTML = Object.entries(m).map(([k,v]) => `
+    <div style="display:flex;align-items:center;gap:6px;margin:3px 0">
+      <div style="width:65px;font-size:10px;font-weight:600">${k}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${(v/mx)*100}%;background:var(--primary)"></div></div>
+      <div style="font-size:9.5px;font-weight:700">₹${Math.round(v/1000)}k</div>
+    </div>
+  `).join('');
+
+  let dm = {}; bills.forEach(b => dm[b.fromLoc] = (dm[b.fromLoc]||0) + b.delayPenalty);
+  let mx2 = Math.max(...Object.values(dm), 1);
+  document.getElementById('c3').innerHTML = Object.entries(dm).map(([k,v]) => `
+    <div style="display:flex;align-items:center;gap:6px;margin:3px 0">
+      <div style="width:65px;font-size:10px;font-weight:600">${k}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${(v/mx2)*100}%;background:#8b5cf6"></div></div>
+      <div style="font-size:9.5px;font-weight:700">₹${v.toLocaleString()}</div>
+    </div>
+  `).join('');
+
+  let top = [...bills].sort((a,b) => b.netPayable - a.netPayable).slice(0, 5);
+  document.getElementById('c4').innerHTML = top.map((b,i) => `
+    <div style="display:flex;justify-content:space-between;border-bottom:1px solid #f1f5f9;padding:4px 0;font-size:10px">
+      <span><b>#${i+1}</b> ${b.billNo} <span style="color:#64748b">(${b.vendor})</span></span>
+      <b style="color:var(--dark)">₹${b.netPayable.toLocaleString()}</b>
+    </div>
+  `).join('');
+}
+
+function refreshVisuals() {
+  let rMap = {};
+  bills.forEach(b => { let k = b.fromLoc + ' ➔ ' + b.toLoc; rMap[k] = (rMap[k]||0) + b.billAmount; });
+  let rMax = Math.max(...Object.values(rMap), 1);
+  document.getElementById('visRoutes').innerHTML = Object.entries(rMap).map(([k,v]) => `
+    <div style="margin:4px 0">
+      <div style="display:flex;justify-content:space-between;font-size:10px"><span>${k}</span><b>₹${(v/100000).toFixed(2)} Lakhs</b></div>
+      <div class="bar-track"><div class="bar-fill" style="width:${(v/rMax)*100}%;background:#E30613"></div></div>
+    </div>
+  `).join('');
+
+  let vMap = {};
+  bills.forEach(b => {
+    if(!vMap[b.vendor]) vMap[b.vendor] = { spend: 0, penalty: 0 };
+    vMap[b.vendor].spend += b.billAmount;
+    vMap[b.vendor].penalty += b.delayPenalty;
+  });
+  let vMax = Math.max(...Object.values(vMap).map(x=>x.spend), 1);
+  document.getElementById('visVendors').innerHTML = Object.entries(vMap).map(([k,v]) => `
+    <div style="margin:4px 0">
+      <div style="display:flex;justify-content:space-between;font-size:10px">
+        <span><b>${k}</b> (Spend: ₹${v.spend.toLocaleString()})</span>
+        <span style="color:#b91c1c;font-weight:700">Penalty: ₹${v.penalty.toLocaleString()}</span>
+      </div>
+      <div class="bar-track">
+        <div class="bar-fill" style="width:${(v.spend/vMax)*100}%;background:#0f172a"></div>
+      </div>
+    </div>
+  `).join('');
+
+  let sMap = { Approved: 0, Pending: 0, Rejected: 0 };
+  bills.forEach(b => { sMap[b.status] = (sMap[b.status]||0) + 1; });
+  let sTot = bills.length || 1;
+  document.getElementById('visStatus').innerHTML = `
+    <div style="display:flex;height:22px;border-radius:6px;overflow:hidden;margin:6px 0">
+      <div style="width:${(sMap.Approved/sTot)*100}%;background:#10b981;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:9.5px">${sMap.Approved} Appr</div>
+      <div style="width:${(sMap.Pending/sTot)*100}%;background:#f59e0b;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:9.5px">${sMap.Pending} Pend</div>
+      <div style="width:${(sMap.Rejected/sTot)*100}%;background:#ef4444;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:9.5px">${sMap.Rejected} Rej</div>
+    </div>
+    <div style="display:flex;justify-content:space-around;font-size:10px;color:#64748b">
+      <span>● Approved: ${sMap.Approved}</span>
+      <span>● Pending: ${sMap.Pending}</span>
+      <span>● Rejected: ${sMap.Rejected}</span>
+    </div>
+  `;
+
+  let sumGross = bills.reduce((s,b)=>s+b.billAmount,0);
+  let sumPen = bills.reduce((s,b)=>s+b.delayPenalty,0);
+  let sumTds = bills.reduce((s,b)=>s+b.tdsAmount,0);
+  let sumAdd = bills.reduce((s,b)=>s+(b.dieselIncreased||0)+(b.detentionExtra||0)+(b.twoPointCharges||0),0);
+  let sumNet = bills.reduce((s,b)=>s+b.netPayable,0);
+
+  document.getElementById('visBreakup').innerHTML = `
+    <div style="font-size:10.5px;display:flex;flex-direction:column;gap:3px">
+      <div style="display:flex;justify-content:space-between"><span>Base Gross:</span><b>₹${sumGross.toLocaleString()}</b></div>
+      <div style="display:flex;justify-content:space-between;color:#b91c1c"><span>- Delay Penalties:</span><b>₹${sumPen.toLocaleString()}</b></div>
+      <div style="display:flex;justify-content:space-between;color:#2563eb"><span>- Statutory TDS:</span><b>₹${sumTds.toLocaleString()}</b></div>
+      <div style="display:flex;justify-content:space-between;color:#15803d"><span>+ Surcharges (Diesel/Det):</span><b>₹${sumAdd.toLocaleString()}</b></div>
+      <hr style="border:none;border-top:1px solid #e2e8f0;margin:3px 0">
+      <div style="display:flex;justify-content:space-between;font-weight:800;font-size:11.5px;color:var(--primary)"><span>= Total Net Payable:</span><b>₹${sumNet.toLocaleString()}</b></div>
+    </div>
+  `;
+}
+
+function openSmall(id) {
+  smallId = id;
+  document.getElementById('sModal').classList.add('on');
+  document.getElementById('sGrid').innerHTML = TDS.map(r => `<button class="rate-btn" onclick="applySmall(${r})">${r}%</button>`).join('');
+}
+function closeS() { document.getElementById('sModal').classList.remove('on'); }
+function applySmall(r) {
+  let b = bills.find(x => x.id == smallId);
+  if(b) { b.tdsRate = r; calc(b); save(); render(); refreshVisuals(); }
+  closeS();
+}
+
+function openGSTFor(id) {
+  smallId = id;
+  gstForBill = true;
+  document.getElementById('gModal').classList.add('on');
+  document.getElementById('gReg').innerHTML = GST.map(r => `<button class="rate-btn" onclick="pickGST('Registered',${r},false)">${r}%</button>`).join('');
+  document.getElementById('gRcm').innerHTML = GST.map(r => `<button class="rate-btn" onclick="pickGST('RCM-GST',${r},true)">${r}%</button>`).join('');
+}
+
+function exportCSV() {
+  let csv = 'BillNo,BillDate,PlantLocation,TruckNo,Vendor,From,To,GR.No,GR.Date,Weight(MT),FreightRate,SAPDocNo,BillAmount,TDSRate,TDSAmt,GSTCategory,GSTType,GSTRate,GSTAmt,MaterialRecdDate,ActualDays,LeadTime,DelayDays,DelayPenalty,DieselIncr,DetentionExtra,TwoPoint,NetPayable,Status\n';
+  bills.forEach(b => {
+    csv += `"${b.billNo}","${b.billDate}","${b.plantLocation||''}","${b.truckNo||''}","${b.vendor}","${b.fromLoc}","${b.toLoc}","${b.grNo||''}","${b.grDate||''}",${b.weight||0},${b.freightRate||0},"${b.sapDocNo||''}",${b.billAmount},"${b.tdsRate}%",${b.tdsAmount},"${b.gstCategory||"IGST"}","${b.gstType}","${b.gstRate}%",${b.gstAmount},"${b.matReceivedDate||''}",${b.actualDays||0},${b.leadTime||0},${b.delayDays||0},${b.delayPenalty||0},${b.dieselIncreased||0},${b.detentionExtra||0},${b.twoPointCharges||0},${b.netPayable},"${b.status}"\n`;
+  });
+  let blob = new Blob([csv], {type: 'text/csv;charset=utf-8;'});
+  let a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `Eveready_Freight_Unfreezed_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+}
+
+// DYNAMIC REPORT GENERATOR
+let currentReportRows = [];
+
+function applyReportTemplate() {
+  let t = document.getElementById('repTemplate').value;
+  if(t === 'vendor_summary') { document.getElementById('repGroupBy').value = 'vendor'; }
+  else if(t === 'transit_delay') { document.getElementById('repGroupBy').value = 'vendor'; }
+  else if(t === 'sap_recon') { document.getElementById('repGroupBy').value = 'route'; }
+  else if(t === 'lane_cost') { document.getElementById('repGroupBy').value = 'route'; }
+  else if(t === 'tax_audit') { document.getElementById('repGroupBy').value = 'gstType'; }
+  generateDynamicReport();
+}
+
+function generateDynamicReport() {
+  let groupBy = document.getElementById('repGroupBy').value;
+  let fromD = document.getElementById('repFromDate').value;
+  let toD = document.getElementById('repToDate').value;
+  let stFilter = document.getElementById('repStatus').value;
+
+  let fil = [...bills];
+  if(stFilter !== 'ALL') { fil = fil.filter(b => b.status === stFilter); }
+  if(fromD) { fil = fil.filter(b => b.billDate >= fromD); }
+  if(toD) { fil = fil.filter(b => b.billDate <= toD); }
+
+  let groups = {};
+  fil.forEach(b => {
+    let key = '';
+    if(groupBy === 'plantLocation') key = b.plantLocation || 'Jammu Plant';
+    else if(groupBy === 'vendor') key = b.vendor;
+    else if(groupBy === 'truckNo') key = b.truckNo || 'Unassigned Vehicle';
+    else if(groupBy === 'route') key = b.fromLoc + ' ➔ ' + b.toLoc;
+    else if(groupBy === 'fromLoc') key = b.fromLoc;
+    else if(groupBy === 'toLoc') key = b.toLoc;
+    else if(groupBy === 'status') key = b.status;
+    else if(groupBy === 'gstCategory') key = b.gstCategory || 'IGST';
+    else if(groupBy === 'gstType') key = b.gstType + (b.isRCM ? ' (RCM)' : ' (Forward)');
+    else key = 'General';
+
+    if(!groups[key]) {
+      groups[key] = {
+        name: key,
+        count: 0,
+        totalWeight: 0,
+        grossFreight: 0,
+        tdsTotal: 0,
+        delayDaysTotal: 0,
+        penaltyTotal: 0,
+        dieselTotal: 0,
+        detentionTotal: 0,
+        twoPointTotal: 0,
+        netPayableTotal: 0,
+        approvedCount: 0,
+        pendingCount: 0
+      };
+    }
+
+    groups[key].count++;
+    groups[key].totalWeight += (b.weight || 0);
+    groups[key].grossFreight += b.billAmount;
+    groups[key].tdsTotal += b.tdsAmount;
+    groups[key].delayDaysTotal += (b.delayDays || 0);
+    groups[key].penaltyTotal += (b.delayPenalty || 0);
+    groups[key].dieselTotal += (b.dieselIncreased || 0);
+    groups[key].detentionTotal += (b.detentionExtra || 0);
+    groups[key].twoPointTotal += (b.twoPointCharges || 0);
+    groups[key].netPayableTotal += b.netPayable;
+    if(b.status === 'Approved') groups[key].approvedCount++;
+    if(b.status === 'Pending') groups[key].pendingCount++;
+  });
+
+  currentReportRows = Object.values(groups);
+
+  let groupTitleMap = { plantLocation: 'Manufacturing / Operating Plant', vendor: 'Carrier / Transporter', route: 'Freight Corridors', fromLoc: 'Origin Hub', toLoc: 'Destination Depot', status: 'Approval Workflow', gstType: 'GST Liability Category' };
+  document.getElementById('repTitle').textContent = `Consolidated Report: Grouped by ${groupTitleMap[groupBy] || groupBy}`;
+  document.getElementById('repRowsBadge').textContent = `${currentReportRows.length} Consolidated Groups`;
+
+  let html = `<table>
+    <thead>
+      <tr>
+        <th class="black">Group Dimension</th>
+        <th class="black">Count</th>
+        <th class="gr">Weight (MT)</th>
+        <th class="black">Gross Freight (₹)</th>
+        <th class="black">TDS (₹)</th>
+        <th class="mat">Delay Days</th>
+        <th class="mat">Delay Penalty (₹)</th>
+        <th class="green">Addons (₹)</th>
+        <th class="black">Net Payable (₹)</th>
+        <th class="black">Avg Rate/MT</th>
+        <th class="black">Appr / Pend</th>
+      </tr>
+    </thead>
+    <tbody>`;
+
+  let sumCons = 0, sumWt = 0, sumGross = 0, sumTds = 0, sumDelay = 0, sumPen = 0, sumAdd = 0, sumNet = 0;
+
+  if(currentReportRows.length === 0) {
+    html += `<tr><td colspan="11" style="padding:16px;text-align:center;color:#94a3b8">No records match criteria</td></tr>`;
+  } else {
+    currentReportRows.forEach(r => {
+      let addons = r.dieselTotal + r.detentionTotal + r.twoPointTotal;
+      let ratePerMt = r.totalWeight > 0 ? Math.round(r.grossFreight / r.totalWeight) : 0;
+      sumCons += r.count;
+      sumWt += r.totalWeight;
+      sumGross += r.grossFreight;
+      sumTds += r.tdsTotal;
+      sumDelay += r.delayDaysTotal;
+      sumPen += r.penaltyTotal;
+      sumAdd += addons;
+      sumNet += r.netPayableTotal;
+
+      html += `<tr>
+        <td style="text-align:left;font-weight:700;padding-left:8px">${r.name}</td>
+        <td>${r.count}</td>
+        <td style="background:#eff6ff">${r.totalWeight.toFixed(1)}</td>
+        <td style="font-weight:600">₹${r.grossFreight.toLocaleString()}</td>
+        <td>₹${r.tdsTotal.toLocaleString()}</td>
+        <td style="background:#f5f3ff">${r.delayDaysTotal} d</td>
+        <td style="color:#b91c1c;font-weight:700">₹${r.penaltyTotal.toLocaleString()}</td>
+        <td style="background:#f0fdf4">₹${addons.toLocaleString()}</td>
+        <td style="background:#0f172a;color:#facc15;font-weight:900">₹${r.netPayableTotal.toLocaleString()}</td>
+        <td style="font-weight:700">₹${ratePerMt.toLocaleString()}</td>
+        <td><span class="badge badge-appr">${r.approvedCount}A</span> / <span class="badge badge-pend">${r.pendingCount}P</span></td>
+      </tr>`;
+    });
+
+    let overallRate = sumWt > 0 ? Math.round(sumGross / sumWt) : 0;
+    html += `</tbody>
+    <tfoot>
+      <tr style="background:#f8fafc;font-weight:800;border-top:2px solid #0f172a">
+        <td style="text-align:left;padding-left:8px">TOTAL</td>
+        <td>${sumCons}</td>
+        <td>${sumWt.toFixed(1)} MT</td>
+        <td>₹${sumGross.toLocaleString()}</td>
+        <td>₹${sumTds.toLocaleString()}</td>
+        <td>${sumDelay} d</td>
+        <td style="color:#b91c1c">₹${sumPen.toLocaleString()}</td>
+        <td>₹${sumAdd.toLocaleString()}</td>
+        <td style="background:#0f172a;color:#facc15">₹${sumNet.toLocaleString()}</td>
+        <td>₹${overallRate}/MT</td>
+        <td>—</td>
+      </tr>
+    </tfoot>`;
+  }
+  html += `</table>`;
+
+  document.getElementById('reportContentArea').innerHTML = html;
+
+  document.getElementById('reportSummaryFoot').innerHTML = `
+    <div><span style="font-size:9.5px;color:#64748b;text-transform:uppercase">Net Liability</span><br><b style="font-size:13px;color:#0f172a">₹${sumNet.toLocaleString()}</b></div>
+    <div style="border-left:1px solid #cbd5e1;padding-left:10px"><span style="font-size:9.5px;color:#64748b;text-transform:uppercase">Penalties</span><br><b style="font-size:13px;color:#b91c1c">₹${sumPen.toLocaleString()}</b></div>
+    <div style="border-left:1px solid #cbd5e1;padding-left:10px"><span style="font-size:9.5px;color:#64748b;text-transform:uppercase">Cargo Tonnage</span><br><b style="font-size:13px;color:#2563eb">${sumWt.toFixed(1)} MT</b></div>
+    <div style="border-left:1px solid #cbd5e1;padding-left:10px"><span style="font-size:9.5px;color:#64748b;text-transform:uppercase">Avg Surcharge</span><br><b style="font-size:13px;color:#10b981">₹${sumCons>0?Math.round(sumAdd/sumCons).toLocaleString():0}/trip</b></div>
+  `;
+}
+
+function exportReportCSV() {
+  if(!currentReportRows || currentReportRows.length === 0) { alert('No data to export.'); return; }
+  let csv = 'Group Dimension,Consignment Count,Total Weight(MT),Gross Freight,TDS Withheld,Total Delay Days,Delay Penalty,Payable Addons,Net Payable,Approved Count,Pending Count\n';
+  currentReportRows.forEach(r => {
+    let addons = r.dieselTotal + r.detentionTotal + r.twoPointTotal;
+    csv += `"${r.name}",${r.count},${r.totalWeight.toFixed(2)},${r.grossFreight},${r.tdsTotal},${r.delayDaysTotal},${r.penaltyTotal},${addons},${r.netPayableTotal},${r.approvedCount},${r.pendingCount}\n`;
+  });
+  let blob = new Blob([csv], {type: 'text/csv;charset=utf-8;'});
+  let a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `Dynamic_Logistics_Report_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+}
+
+function openImportModal() { document.getElementById('importModal').classList.add('on'); }
+function closeImportModal() { document.getElementById('importModal').classList.remove('on'); }
+
+function handleCSVFile(e) {
+  let file = e.target.files[0];
+  if(!file) return;
+  let reader = new FileReader();
+  reader.onload = function(evt) {
+    let lines = evt.target.result.split(/\r\n|\n/);
+    if(lines.length < 2) { alert('CSV file is empty or invalid.'); return; }
+    let count = 0;
+    for(let i=1; i<lines.length; i++) {
+      let line = lines[i].trim();
+      if(!line) continue;
+      let cols = line.split(',').map(c => c.replace(/^"|"$/g, '').trim());
+      if(cols.length >= 8) {
+        let newBill = {
+          id: Date.now() + i,
+          billNo: cols[0] || ('EB/' + Math.floor(1000 + Math.random()*9000)),
+          billDate: cols[1] || new Date().toISOString().slice(0,10),
+          plantLocation: cols[2] || 'Jammu Plant',
+          truckNo: cols[3] || '',
+          vendor: cols[4] || 'Unassigned Carrier',
+          fromLoc: cols[4] || 'Hub',
+          toLoc: cols[5] || 'Depot',
+          grNo: cols[6] || '',
+          grDate: cols[6] || '',
+          weight: parseFloat(cols[7]) || 0,
+          freightRate: parseFloat(cols[8]) || 0,
+          sapDocNo: cols[9] || '',
+          billAmount: parseFloat(cols[10]) || 0,
+          tdsRate: parseFloat((cols[11]||'2').replace('%','')) || 2,
+          gstCategory: cols[13] || 'IGST',
+          gstType: cols[14] || 'Registered',
+          gstRate: parseFloat((cols[14]||'18').replace('%','')) || 18,
+          isRCM: (cols[13]||'').includes('RCM'),
+          matReceivedDate: cols[16] || '',
+          leadTime: parseFloat(cols[18]) || 3,
+          dieselIncreased: parseFloat(cols[21]) || 0,
+          detentionExtra: parseFloat(cols[22]) || 0,
+          twoPointCharges: parseFloat(cols[23]) || 0,
+          status: cols[25] || 'Pending'
+        };
+        calc(newBill);
+        bills.unshift(newBill);
+        count++;
+      }
+    }
+    save();
+    render();
+    refreshVisuals();
+    populateVendorFilter();
+    closeImportModal();
+    alert(`Successfully imported ${count} consignment records!`);
+  };
+  reader.readAsText(file);
+}
+
+function downloadSampleCSV() {
+  let sample = 'BillNo,BillDate,PlantLocation,TruckNo,Vendor,From,To,GR.No,GR.Date,Weight(MT),FreightRate,SAPDocNo,BillAmount,TDSRate,TDSAmt,GSTCategory,GSTType,GSTRate,GSTAmt,MaterialRecdDate,ActualDays,LeadTime,DelayDays,DelayPenalty,DieselIncr,DetentionExtra,TwoPoint,NetPayable,Status\n';
+  sample += '"EB/SAMPLE/01","2026-04-15","Jammu Plant","DL-01-AB-1234","Sample Logistics","Delhi","Mumbai","GR-99210","2026-04-10",15.5,8200,"500129999",127100,"2%",2542,"Registered","18%",22878,"2026-04-14",4,3,1,1000,1000,0,0,147436,"Pending"\n';
+  let blob = new Blob([sample], {type: 'text/csv;charset=utf-8;'});
+  let a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'Eveready_Freight_Sample_Template.csv';
+  a.click();
+}
+
+let autoSaveEnabled = true;
+let autoSaveIntervalMs = 10000;
+let autoSaveTimer = null;
+
+function toggleAutoSave() {
+  autoSaveEnabled = document.getElementById('autoSaveToggle').checked;
+  if(autoSaveEnabled) startAutoSave(); else stopAutoSave();
+}
+function updateAutoSaveInterval() {
+  autoSaveIntervalMs = parseInt(document.getElementById('autoSaveInterval').value);
+  if(autoSaveEnabled) { stopAutoSave(); startAutoSave(); }
+}
+function startAutoSave() {
+  stopAutoSave();
+  autoSaveTimer = setInterval(() => {
+    if(autoSaveEnabled) {
+      save();
+      let el = document.getElementById('lastSaved');
+      if(el) {
+        el.textContent = '✓ Saved ' + new Date().toLocaleTimeString();
+        setTimeout(() => el.textContent = '✓ Ready', 2200);
+      }
+    }
+  }, autoSaveIntervalMs);
+}
+function stopAutoSave() { if(autoSaveTimer) { clearInterval(autoSaveTimer); autoSaveTimer = null; } }
+
+window.addEventListener('load', () => {
+  applySelectedTheme(currentThemeKey);
+  applyUserSession();
+  initRatePickers();
+  render();
+  refreshVisuals();
+  populateVendorFilter();
+  generateDynamicReport();
+  if(autoSaveEnabled) startAutoSave();
+});
+</script>
+<!-- MASTER ADMIN CONTROL MODAL (USERS & TICKETS) -->
+<div class="modal" id="adminControlModal">
+  <div class="box" style="max-width:960px">
+    <div class="box-h" style="background:#0f172a">
+      <div style="display:flex;align-items:center;gap:8px">
+        <span style="font-size:18px">👑</span>
+        <div>
+          <b style="font-size:13.5px">Master Admin Control Center</b>
+          <div style="font-size:10px;color:#94a3b8">User Management • Block/Unblock • Ticket Resolution & Password Resets</div>
+        </div>
+      </div>
+      <button class="btn" style="width:auto;padding:2px 8px;margin:0" onclick="closeAdminModal()">✕</button>
+    </div>
+
+    <div style="padding:14px">
+      <!-- Sub-Tabs for Admin Modal -->
+      <div style="display:flex;gap:6px;border-bottom:2px solid var(--border);padding-bottom:6px;margin-bottom:12px">
+        <button id="admTabBtn1" class="btn" style="padding:6px 12px;font-size:11px" onclick="switchAdminSubTab('tickets')">🎫 Password Reset Tickets (<span id="pendingTktCount">0</span> Pending)</button>
+        <button id="admTabBtn2" class="btn-b" style="padding:6px 12px;font-size:11px" onclick="switchAdminSubTab('users')">👥 User Directory & Password Resets</button>
+        <button class="btn-o" style="padding:6px 12px;font-size:11px;margin-left:auto" onclick="addNewUserPrompt()">+ Add User Directly</button>
+      </div>
+
+      <!-- TAB 1: TICKETS VIEW -->
+      <div id="admViewTickets">
+        <div style="background:#fefce8;border:1px solid #fef08a;padding:8px 12px;border-radius:6px;font-size:11px;color:#854d0e;margin-bottom:10px">
+          <b>Pending Tickets:</b> Users who forgot passwords or were locked out raise requests here. Click <b>"Reset Password & Resolve"</b> to grant a new password.
+        </div>
+        <div class="table-wrap" style="max-height:48vh">
+          <table>
+            <thead>
+              <tr>
+                <th class="black">Ticket ID</th>
+                <th class="black">Date & Time</th>
+                <th class="black">User / Mobile</th>
+                <th class="black">Full Name & Role</th>
+                <th class="black">Issue Type</th>
+                <th class="black">User Remarks</th>
+                <th class="black">Status</th>
+                <th class="black">Master Admin Action</th>
+              </tr>
+            </thead>
+            <tbody id="ticketsTblBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TAB 2: USERS DIRECTORY VIEW -->
+      <div id="admViewUsers" style="display:none">
+        <div style="background:#eff6ff;border:1px solid #bfdbfe;padding:8px 12px;border-radius:6px;font-size:11px;color:#1e40af;margin-bottom:10px">
+          <b>User Security Directory:</b> All rights reserved with Master Admin. You can block/unblock members, change assigned roles, or directly reset passwords.
+        </div>
+        <div class="table-wrap" style="max-height:48vh">
+          <table>
+            <thead>
+              <tr>
+                <th class="black">User ID</th>
+                <th class="black">Username</th>
+                <th class="black">Full Name</th>
+                <th class="black">Mobile Number</th>
+                <th class="black">Assigned Role</th>
+                <th class="black">Account Status</th>
+                <th class="black">Current Password</th>
+                <th class="black">Master Admin Actions</th>
+              </tr>
+            </thead>
+            <tbody id="usersTblBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div style="background:#0f172a;color:#94a3b8;padding:12px 18px;text-align:center;font-size:11px;border-top:2px solid var(--primary);margin-top:20px">
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;max-width:1400px;margin:auto">
+    <div>
+      <b style="color:#fff">EVEREADY FREIGHT 5.5 PRO</b> — Logistics Reconciler & Master Admin System
+    </div>
+    <div style="font-size:11.5px">
+      Design & Architecture: <span style="color:#facc15;font-weight:800;background:rgba(250,204,21,0.1);padding:3px 8px;border-radius:4px;border:1px solid rgba(250,204,21,0.3)">Created By SALIK RAM MAURYA</span>
+    </div>
+    <div style="color:#64748b">
+      © 2026 Eveready Freight Automation System • All Rights Reserved
+    </div>
+  </div>
+</div>
+
+
+<!-- 12 THEME PALETTE SWATCH MODAL -->
+<div class="modal" id="themeModal">
+  <div class="box" style="max-width:560px">
+    <div class="box-h" style="background:#0f172a">
+      <div style="display:flex;align-items:center;gap:6px">
+        <span style="font-size:16px">🎨</span>
+        <b style="font-size:13px">Select App Theme (12 Color Palettes)</b>
+      </div>
+      <button class="btn" style="width:auto;padding:2px 6px;margin:0" onclick="closeThemeModal()">✕</button>
+    </div>
+    <div style="padding:14px">
+      <div style="font-size:11px;color:#64748b;margin-bottom:12px">
+        Choose any of the 12 curated themes below. Your preference will be saved automatically across all sessions and devices.
+      </div>
+      
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px" id="themeGridSwatches">
+        <!-- Rendered by JS -->
+      </div>
+      
+      <div style="display:flex;justify-content:flex-end;margin-top:14px;border-top:1px solid #f1f5f9;padding-top:10px">
+        <button class="btn-b" onclick="closeThemeModal()">Close & Apply</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
